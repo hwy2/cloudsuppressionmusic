@@ -10,9 +10,7 @@
           <img v-lazy="item.pic"
                :alt="item.typeTitle"
                :bannerId="item.bannerId" />
-          <span :style="{ background: item.titleColor }">{{
-            item.typeTitle
-          }}</span>
+          <span :style="{ background: item.titleColor }">{{ item.typeTitle }}</span>
         </mt-swipe-item>
       </mt-swipe>
     </div>
@@ -35,7 +33,7 @@
 
     <!-- 推荐歌单 -->
     <div class="recommendation"
-         v-if="recommendedSongList != '' && recommendedSongList.creatives.length>0">
+         v-if="recommendedSongList != '' && recommendedSongList.creatives.length > 0">
       <div class="topTile">
         <div class="left">
           <p>{{ recommendedSongList.uiElement.subTitle.title }}</p>
@@ -55,9 +53,7 @@
                  :alt="item.uiElement.mainTitle.title" />
             <span>
               <i class="iconfont iconicon--"></i>
-              {{
-                item.resources[0].resourceExtInfo.playCount | retainDoubleDigit
-              }}
+              {{ item.resources[0].resourceExtInfo.playCount | retainDoubleDigit }}
             </span>
             <p>{{ item.uiElement.mainTitle.title }}</p>
           </li>
@@ -67,7 +63,7 @@
 
     <!-- 歌曲推荐 -->
     <div class="recommendation songNew"
-         v-if="personalTailor != '' && personalTailor.creatives.length>0">
+         v-if="personalTailor != '' && personalTailor.creatives.length > 0">
       <div class="topTile">
         <div class="left">
           <p>
@@ -76,9 +72,7 @@
         </div>
         <div class="right">
           <a href="javascript:void(0)"
-             @click="playMusicAll()">
-            <i class="iconfont iconbofang"></i><span>播放全部</span>
-          </a>
+             @click="playMusicAll()"> <i class="iconfont iconbofang"></i><span>播放全部</span> </a>
         </div>
       </div>
 
@@ -89,12 +83,7 @@
             <ul class="smallList">
               <li v-for="(song, indexs) in item.resources"
                   :key="indexs"
-                  @click="
-                  playMusic(
-                    song.resourceExtInfo.songData,
-                    song.uiElement.image.imageUrl
-                  )
-                ">
+                  @click="playMusic(song.resourceExtInfo.songData, song.uiElement.image.imageUrl)">
                 <div class="left">
                   <img :src="song.uiElement.image.imageUrl"
                        alt="d" />
@@ -119,7 +108,7 @@
 
     <!-- 音乐日历 -->
     <div class="musicCalendar"
-         v-if="musicCalendar !='' && musicCalendar.creatives.length>0">
+         v-if="musicCalendar != '' && musicCalendar.creatives.length > 0">
       <div class="details">
         <div class="top">
           <p>
@@ -153,7 +142,7 @@
 
     <!-- 场景推荐 -->
     <div class="recommendation"
-         v-if="exclusiveScene != '' && exclusiveScene.creatives.length>0">
+         v-if="exclusiveScene != '' && exclusiveScene.creatives.length > 0">
       <div class="topTile">
         <div class="left">
           <p>{{ exclusiveScene.uiElement.subTitle.title }}</p>
@@ -173,9 +162,7 @@
                  :alt="item.uiElement.mainTitle.title" />
             <span>
               <i class="iconfont iconicon--"></i>
-              {{
-                item.resources[0].resourceExtInfo.playCount | retainDoubleDigit
-              }}
+              {{ item.resources[0].resourceExtInfo.playCount | retainDoubleDigit }}
             </span>
             <p>{{ item.uiElement.mainTitle.title }}</p>
           </li>
@@ -185,14 +172,13 @@
 
     <!-- LOOK直播 -->
     <div class="recommendation broadcast"
-         v-if="voiceBroadcast != '' && voiceBroadcast.extInfo.length>0">
+         v-if="voiceBroadcast != '' && voiceBroadcast.extInfo.length > 0">
       <div class="topTile">
         <div class="left">
           <p>{{ voiceBroadcast.uiElement.subTitle.title }}</p>
         </div>
         <div class="right">
-          <a href="javascript:void(0)"
-             @click="openSongsheetDialog('官方')">查看更多</a>
+          <a href="javascript:void(0)">查看更多</a>
         </div>
       </div>
 
@@ -215,7 +201,7 @@
 
     <!-- 新歌|新碟 -->
     <div class="recommendation newDisc"
-         v-if="newSong != '' && newSong.creatives.length>0">
+         v-if="newSong != '' && newSong.creatives.length > 0">
       <div class="topTile">
         <div class="left">
           <p>
@@ -243,12 +229,7 @@
             <ul class="smallList">
               <li v-for="(song, indexs) in newSong.creatives[2].resources"
                   :key="indexs"
-                  @click="
-                  playMusic(
-                    song.resourceExtInfo.songData,
-                    song.uiElement.image.imageUrl
-                  )
-                ">
+                  @click="playMusic(song.resourceExtInfo.songData, song.uiElement.image.imageUrl)">
                 <div class="left">
                   <img :src="song.uiElement.image.imageUrl"
                        alt="d" />
@@ -272,12 +253,7 @@
             <ul class="smallList">
               <li v-for="(song, indexs) in newSong.creatives[1].resources"
                   :key="indexs"
-                  @click="
-                  playMusic(
-                    song.resourceExtInfo.songData,
-                    song.uiElement.image.imageUrl
-                  )
-                ">
+                  @click="playMusic(song.resourceExtInfo.songData, song.uiElement.image.imageUrl)">
                 <div class="left">
                   <img :src="song.uiElement.image.imageUrl"
                        alt="d" />
@@ -324,12 +300,7 @@
             <ul class="smallList">
               <li v-for="(song, indexs) in newSong.creatives[3].resources"
                   :key="indexs"
-                  @click="
-                  playMusic(
-                    song.resourceExtInfo.songData,
-                    song.uiElement.image.imageUrl
-                  )
-                ">
+                  @click="playMusic(song.resourceExtInfo.songData, song.uiElement.image.imageUrl)">
                 <div class="left">
                   <img :src="song.uiElement.image.imageUrl"
                        alt="d" />
@@ -349,14 +320,13 @@
 
     <!-- 云村KTV -->
     <div class="recommendation yuncunktv"
-         v-if="yuncunktv !='' && yuncunktv.extInfo.roomInfoList.length>0 ">
+         v-if="yuncunktv != '' && yuncunktv.extInfo.roomInfoList.length > 0">
       <div class="topTile">
         <div class="left">
           <p>{{ yuncunktv.uiElement.subTitle.title }}</p>
         </div>
         <div class="right">
-          <a href="javascript:void(0)"
-             @click="openSongsheetDialog('官方')">查看更多</a>
+          <a href="javascript:void(0)">查看更多</a>
         </div>
       </div>
 
@@ -386,7 +356,7 @@
 
     <!-- 24小时播客-->
     <div class="recommendation podcast"
-         v-if="podcast!= '' && podcast.creatives.length>0">
+         v-if="podcast != '' && podcast.creatives.length > 0">
       <div class="topTile">
         <div class="left">
           <p>{{ podcast.uiElement.subTitle.title }}</p>
@@ -412,6 +382,12 @@
     <!-- 每日推荐弹出层 -->
     <daily-recommendation @close="closeDaily"
                           v-if="dailyVisible"></daily-recommendation>
+
+    <!-- 歌单列表弹出层 -->
+    <song-sheet :songSheetType="songSheetType"
+                @shutdown="closeSongsheetDialog"
+                v-if="songSheetVisible"></song-sheet>
+
   </div>
 </template>
 
@@ -419,11 +395,13 @@
 import "../../assets/less/find.less";
 import { Indicator } from "mint-ui";
 import DailyRecommendation from "../../components/dailyRecommendation/recommendation";
+import SongSheet from "../../components/songSheet/songSheet";
 
 export default {
   name: "find",
   components: {
     DailyRecommendation,
+    SongSheet,
   },
   data () {
     return {
@@ -436,12 +414,14 @@ export default {
       podcast: [], //24小时播客
       yuncunktv: [], //云村KTV
       dailyVisible: false, //每日推荐弹出层
-      recommendedSongList: [],//推荐歌单
-      personalTailor: [],//私人定制
-      exclusiveScene: [],//专属场景歌单
-      voiceBroadcast: [],//语音直播
-      musicCalendar: [],//音乐日历
-      newSong: []//新歌新碟
+      recommendedSongList: [], //推荐歌单
+      personalTailor: [], //私人定制
+      exclusiveScene: [], //专属场景歌单
+      voiceBroadcast: [], //语音直播
+      musicCalendar: [], //音乐日历
+      newSong: [], //新歌新碟
+      songSheetType: "推荐", //默认打开歌单类型
+      songSheetVisible: false, //歌单列表弹出层
     };
   },
   filters: {
@@ -474,6 +454,7 @@ export default {
       // 获取圆形图标入口列表
       this.$axios({
         url: "/homepage/dragon/ball",
+        withCredentials: false
       })
         .then((res) => {
           // window.console.log("圆形图标入口列表", res);
@@ -492,6 +473,7 @@ export default {
         params: {
           refresh: true,
         },
+        withCredentials: false
       })
         .then((res) => {
           window.console.log("首页", res.data);
@@ -568,7 +550,35 @@ export default {
         case 1:
           this.openSongsheetDialog("推荐");
           break;
+        case 2:
+          this.openSongsheetDialog();
+          break;
       }
+    },
+    openSongsheetDialog: function (type) {
+      // dialog开关
+      this.songSheetVisible = true;
+      this.songSheetType = type;
+    },
+    closeSongsheetDialog: function () {
+      this.songSheetVisible = false;
+    },
+    playMusicAll: function () {
+      let that = this;
+      let songAll = [];
+
+      that.personalTailor.creatives.forEach(function (item) {
+        item.resources.forEach(function (i) {
+          let images = i.uiElement.image.imageUrl;
+          i.picUrl = images;
+          i.name = i.uiElement.mainTitle.title;
+          window.console.log(i);
+          songAll.push(i);
+        });
+      });
+      that.$store.commit("setplaylist", songAll);
+      that.$store.commit("setserialNumber", 0);
+      that.getplayMusic(songAll[0].resourceId, songAll[0]);
     },
   },
   created () {

@@ -19,7 +19,8 @@
     </div>
 
     <!-- 常见功能-->
-    <div class="common">
+    <div class="common"
+         v-if="rendering">
       <div class="bgc">
         <ul class="clearfix">
           <li>

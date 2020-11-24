@@ -36,9 +36,9 @@ const routes = [{
             name: 'square'
         },
         children: [{
-            path: '/home/yuncun/square',
+            path: '/home/yuncun/recommend',
             name: 'square',
-            component: () => import('../views/yuncun/square/square.vue'),
+            component: () => import('../views/yuncun/recommend/recommend.vue'),
         }, {
             path: '/home/yuncun/follow',
             name: 'follow',

@@ -72,9 +72,9 @@ export default {
         throw new Error("请设置你的手机号码和密码");
       }
       Indicator.open("登录中...");
-
       this.$axios({
         url: `/login/cellphone?phone=${phone}&password=${password}`,
+        withCredentials: true
       })
         .then(function (res) {
           console.log("登录信息", res.data);
@@ -86,6 +86,10 @@ export default {
             cookie.set("account", res.data.account, {
               expires: 1,
             });
+
+            cookie.set("cookie", res.data.cookie, {
+              expires: 1,
+            });
             Toast({
               message: "登录成功",
               position: "top",
@@ -93,14 +97,22 @@ export default {
             });
             that.$router.push({ name: "find" });
             that.$store.commit("setSelected", "find");
-            cookie.set("cookie", res.data.cookie, {
-              expires: 1,
+          } else {
+            Toast({
+              message: res.data.msg,
+              position: "top",
+              duration: 3000,
             });
           }
         })
         .catch((error) => {
           window.console.log("登录信息获取失败！/n" + error);
           Indicator.close();
+          Toast({
+            message: "登录失败，账号或密码错误",
+            position: "top",
+            duration: 3000,
+          });
         });
     },
   },

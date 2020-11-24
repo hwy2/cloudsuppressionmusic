@@ -236,7 +236,7 @@
         <mt-tab-item id="me">我的</mt-tab-item>
         <mt-tab-item id="find">发现</mt-tab-item>
         <mt-tab-item id="yuncun">云村</mt-tab-item>
-        <mt-tab-item id="videoY">视频</mt-tab-item>
+        <!--<mt-tab-item id="videoY">视频</mt-tab-item>-->
       </mt-navbar>
       <div class="search">
         <i class="iconfont iconsousuo"
@@ -282,6 +282,11 @@
       </div>
     </div>
 
+    <!-- 播放详情 -->
+    <panel-play @panelClose="closePanelDialog"
+                v-if="panelVisible"
+                :appthat="that"></panel-play>
+
     <!-- 歌单列表弹出层 
     <search @searchdown="closeSearchdialog" v-if="searchVisible"></search>-->
   </div>
@@ -291,21 +296,18 @@
 import "../assets/less/home.less";
 import cookie from "json-cookie";
 // import Search from "../components/search";
+import PanelPlay from "../components/playPanel/playPanel";
 
 export default {
   name: "Home",
-  // components: { Search },
+  components: { PanelPlay, },
   data () {
     return {
       popupVisible: false,
       searchVisible: false, //搜索页
-      song: {
-        picUrl: require("../assets/images/lo.png"),
-        name: "aa",
-      },//当前歌曲信息
-      songPlayUrl: "",//歌曲播放链接
-      isPlay: false,//是否播放
       profile: [],//用户信息
+      panelVisible: false,//播放详情页面
+      that: this,
     };
   },
   methods: {
@@ -322,6 +324,51 @@ export default {
       let img = event.srcElement;
       img.src = require("../assets/images/lo.png");
       img.onerror = null; //防止闪图
+    },
+    closePanelDialog: function () {
+      this.panelVisible = false;
+    },
+    openPanelDialog: function () {
+      // dialog开关
+      this.panelVisible = true;
+    },
+    playAudio: function () {
+      // 播放音乐，并修改状态
+      // window.console.log(document.getElementById("audioPlayer"));
+      this.$refs.audio.play();
+      this.$store.commit("setisPlay", true);
+      let musicrotateAn = document.getElementById("musicImg");
+      musicrotateAn.setAttribute(
+        "style",
+        "-webkit-animation: rotateAn 8s linear infinite; animation: rotateAn 8s linear infinite;"
+      );
+    },
+    pauseAudio: function () {
+      // 暂停音乐，并修改状态
+      this.$refs.audio.pause();
+      this.$store.commit("setisPlay", false);
+      let musicrotateAn = document.getElementById("musicImg");
+      musicrotateAn.setAttribute("style", "");
+    },
+    palyNextSong: function () {
+      this.nextSong(this.serialNumber, this.playlist);
+    },
+    playMusicAll: function () {
+      let that = this;
+      let songAll = [];
+
+      that.newsongList.creatives.forEach(function (item) {
+        item.resources.forEach(function (i) {
+          let images = i.uiElement.image.imageUrl;
+          i.picUrl = images;
+          i.name = i.uiElement.mainTitle.title;
+          window.console.log(i);
+          songAll.push(i);
+        });
+      });
+      that.$store.commit("setplaylist", songAll);
+      that.$store.commit("setserialNumber", 0);
+      that.playMusic(songAll[0], songAll[0].picUrl);
     },
   },
   watch: {
@@ -343,6 +390,13 @@ export default {
         styleLang.style.zIndex = 2002;
       }
     },
+    isPlay: function (newV) {
+      if (newV) {
+        this.playAudio();
+      } else {
+        this.pauseAudio();
+      }
+    }
   },
   computed: {
     selected: {//导航栏选中
@@ -352,6 +406,52 @@ export default {
       set (v) {
         // 使用vuex中的mutations中定义好的方法来改变
         this.$store.commit("setSelected", v);
+      },
+    },
+    song: {
+      //歌曲信息
+      get () {
+        return this.$store.state.songInfo;
+      },
+      set (v) {
+        this.$store.commit("setsongInfo", v);
+      },
+    },
+    songPlayUrl: {
+      //歌曲URL
+      get () {
+        return this.$store.state.songPlayUrl;
+      },
+      set (v) {
+        this.$store.commit("setsongPlayUrl", v);
+      },
+    },
+    serialNumber: {
+      //播放列表序号
+      get () {
+        return this.$store.state.serialNumber;
+      },
+      set (v) {
+        this.$store.commit("setserialNumber", v);
+      },
+    },
+    playlist: {
+      //歌曲列表
+      get () {
+        return this.$store.state.playlist;
+      },
+      set (v) {
+        this.$store.commit("setplaylist", v);
+      },
+    },
+    isPlay: {
+      //播放状态
+      get () {
+        return this.$store.state.isPlay;
+      },
+      set (v) {
+        // 使用vuex中的mutations中定义好的方法来改变
+        this.$store.commit("setisPlay", v);
       },
     },
   },

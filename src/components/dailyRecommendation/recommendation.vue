@@ -77,7 +77,10 @@
                     </div>
                     <div class="right">
                       <div class="icon">
-                        <i class="iconfont iconbofang"></i>
+                        <i v-if="item.mv>0"
+                           class="iconfont iconbofang"></i>
+                        <i v-else
+                           class="iconfont"></i>
                         <i class="iconfont iconziyuan"></i>
                       </div>
                     </div>
@@ -96,7 +99,7 @@
 import "../../assets/less/recommendation.less";
 import { Toast } from "mint-ui";
 import { Indicator } from "mint-ui";
-// import cookie from "json-cookie";
+import cookie from "json-cookie";
 
 export default {
   name: "DailyRecommendation",
@@ -125,18 +128,19 @@ export default {
     },
     getDailyMusic: function () {
       Indicator.open("加载中...");
-      //   let loginCookie = cookie.get("cookie");
       let that = this;
       // 获取每日推荐歌曲
       this.$axios
         .post("/recommend/songs")
         .then((res) => {
-          window.console.log("每日推荐", JSON.stringify(res.data));
+          //   window.console.log("每日推荐", JSON.stringify(res.data));
           if (res.data.code === 200) {
             this.backgroudURl =
               "url(" +
               res.data.data.dailySongs[0].al.picUrl +
               ") no-repeat center center";
+
+            that.dailySongs = JSON.stringify(res.data.data.dailySongs);
             that.$store.commit(
               "setdailySongs",
               JSON.stringify(res.data.data.dailySongs)
@@ -166,17 +170,39 @@ export default {
     this.month =
       data.getMonth() < 9 ? "0" + (data.getMonth() + 1) : data.getMonth() + 1;
     this.day = data.getDate() <= 9 ? "0" + data.getDate() : data.getDate();
+  },
+  beforeCreate () {
 
-    if (this.getLoginStatus()) {
-      this.getDailyMusic(); //获取每日推荐
+    if (cookie.get("profile")) {
+      let that = this;
+      // 获取每日推荐歌曲
+      this.$axios
+        .post("/recommend/songs")
+        .then((res) => {
+          window.console.log("每日推荐", JSON.stringify(res.data));
+          if (res.data.code === 200) {
+            that.backgroudURl =
+              "url(" +
+              res.data.data.dailySongs[0].al.picUrl +
+              ") no-repeat center center";
+
+            that.dailySongs = res.data.data.dailySongs;
+            that.$store.commit(
+              "setdailySongs",
+              res.data.data.dailySongs
+            );
+            Indicator.close();
+          }
+        })
+        .catch((error) => {
+          window.console.log("每日推荐获取失败！/n" + error);
+        });
     } else {
       Toast({
         message: "请登录后再查看",
         position: "top",
         duration: 3000,
       });
-      //   cookie.delete("profile");
-      //   this.$router.push({ name: "login" });
     }
 
   },
