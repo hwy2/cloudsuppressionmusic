@@ -97,19 +97,15 @@ export default {
             cookie.set("account", res.data.account, {
               expires: 1,
             });
-
-            cookie.set("cookie", res.data.cookie, {
-              expires: 1,
-            });
             Toast({
               message: "登录成功",
               position: "top",
               duration: 3000,
             });
+            that.getnewsong();
             that.$router.push({ name: "find" });
             that.$store.commit("setSelected", "find");
             //获取用户播放记录
-            that.getnewsong();
           } else {
             Toast({
               message: res.data.msg,

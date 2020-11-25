@@ -240,16 +240,6 @@ export default {
             }
           }
 
-          cookie.set("likeMusic", res.data.playlist[0], {
-            expires: 7,
-          });
-          cookie.set("createSongLists", that.createSongLists, {
-            expires: 7,
-          });
-          cookie.set("collectionSongLists", that.collectionSongLists, {
-            expires: 7,
-          });
-
         })
         .catch((error) => {
           window.console.log("获取失败！/n" + error);
