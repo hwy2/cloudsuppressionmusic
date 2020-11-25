@@ -11,9 +11,15 @@
               :key="index">
             <div class="warp"
                  v-if="item.type == 1">
-              <img :src="item.data.coverUrl"
-                   :alt="item.data.title"
-                   ref="imgError">
+              <div class="image">
+                <img :src="item.data.coverUrl"
+                     :alt="item.data.title"
+                     ref="imgError">
+                <img :src="item.data.creator.avatarUrl"
+                     :alt="item.data.creator.nickname">
+
+                <span>{{item.data.durationms|formatMilliseconds}}</span>
+              </div>
               <p class="description">
                 {{item.data.title}}
               </p>
@@ -24,8 +30,10 @@
             </div>
             <div class="warp"
                  v-else>
-              <img :src="item.data.liveData.liveRoom.coverUrl"
-                   :alt="item.data.liveData.liveRoom.title">
+              <div class="image">
+                <img :src="item.data.liveData.liveRoom.coverUrl"
+                     :alt="item.data.liveData.liveRoom.title">
+              </div>
               <p class="description">
                 {{item.data.liveData.liveRoom.title}}
               </p>
@@ -58,6 +66,39 @@ export default {
         return (data / 10000).toFixed(2) + "万";
       }
     },
+    formatMilliseconds: function (value) {
+      var second = parseInt(value) / 1000; // second
+      var minute = 0; // minute
+      var hour = 0; // hour
+      if (second > 60) {
+        minute = parseInt(second / 60);
+        second = parseInt(second % 60);
+        if (minute > 60) {
+          hour = parseInt(minute / 60);
+          minute = parseInt(minute % 60);
+        }
+      }
+      var result;
+      if (second >= 10) {
+        result = "" + parseInt(second);
+      } else {
+        result = "" + "0" + parseInt(second);
+      }
+      if (minute >= 10) {
+        result = "" + parseInt(minute) + ":" + result;
+      } else {
+        result = "" + "0" + parseInt(minute) + ":" + result;
+      }
+      if (hour >= 10) {
+        result = "" + parseInt(hour) + ":" + result;
+      } else {
+        if (hour > 0) {
+          result = "" + "0" + parseInt(hour) + ":" + result;
+        }
+      }
+      return result;
+    },
+
   },
   methods: {
     getVideoGroupList: function () {
@@ -80,7 +121,7 @@ export default {
         url: "/video/timeline/recommend",
       })
         .then((res) => {
-          //   window.console.log("获取视频推荐", JSON.stringify(res));
+          window.console.log("获取视频推荐", JSON.stringify(res));
           this.videoList = res.data.datas;
 
           this.videoList.forEach(function (item) {

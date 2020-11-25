@@ -50,6 +50,17 @@ export default {
       userPassword: "", //密码
     };
   },
+  computed: {
+    song: {
+      //歌曲信息
+      get () {
+        return this.$store.state.songInfo;
+      },
+      set (v) {
+        this.$store.commit("setsongInfo", v);
+      },
+    },
+  },
   methods: {
     sorry: function () {
       Toast({
@@ -97,6 +108,8 @@ export default {
             });
             that.$router.push({ name: "find" });
             that.$store.commit("setSelected", "find");
+            //获取用户播放记录
+            that.getnewsong();
           } else {
             Toast({
               message: res.data.msg,
@@ -115,6 +128,52 @@ export default {
           });
         });
     },
+    getnewsong: function () {
+      let profile = cookie.get("profile")
+      let that = this;
+      // 获取播放记录歌曲
+      that
+        .$axios({
+          url: "/user/record",
+          params: {
+            uid: profile.userId,
+            type: 1,
+          },
+        })
+        .then((res) => {
+          window.console.log("播放记录", res.data);
+          res.data.weekData[res.data.weekData.length - 1].song["picUrl"] =
+            res.data.weekData[res.data.weekData.length - 1].song.al.picUrl;
+          that.$store.commit(
+            "setsongInfo",
+            JSON.stringify(res.data.weekData[res.data.weekData.length - 1].song)
+          );
+
+          cookie.set("songInfo", res.data.weekData[res.data.weekData.length - 1].song);
+
+          that.getMusicUrl();
+        })
+        .catch((error) => {
+          window.console.log("播放记录获取失败！", error);
+        });
+    },
+    getMusicUrl: function () {
+      // 根据localStorage的歌曲id,获取详细歌曲的信息
+      this.$axios
+        .get("/song/url", {
+          params: {
+            id: this.song.id,
+          },
+        })
+        .then((res) => {
+          this.$store.commit("setsongPlayUrl", res.data.data[0].url);
+          this.$store.commit("setisPlay", false);
+          // window.console.log("详细歌曲的信息", JSON.stringify(res));
+        })
+        .catch((error) => {
+          window.console.log("歌曲URL获取失败！", error);
+        });
+    }
   },
 };
 </script>

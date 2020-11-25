@@ -21,31 +21,31 @@ const routes = [{
         name: 'find'
     },
     children: [{
-        path: '/home/find',
+        path: '/find',
         name: 'find',
         component: () => import('../views/find/find.vue')
     }, {
-        path: '/home/me',
+        path: '/me',
         name: 'me',
         component: () => import('../views/me/me.vue')
     }, {
-        path: '/home/yuncun',
+        path: '/yuncun',
         name: 'yuncun',
         component: () => import('../views/yuncun/yuncun.vue'),
         redirect: {
             name: 'square'
         },
         children: [{
-            path: '/home/yuncun/recommend',
+            path: '/yuncun/recommend',
             name: 'square',
             component: () => import('../views/yuncun/recommend/recommend.vue'),
         }, {
-            path: '/home/yuncun/follow',
+            path: '/yuncun/follow',
             name: 'follow',
             component: () => import('../views/yuncun/follow/follow.vue'),
         }]
     }, {
-        path: '/home/videoY',
+        path: '/videoY',
         name: 'videoY',
         component: () => import('../views/video/video.vue')
     }]

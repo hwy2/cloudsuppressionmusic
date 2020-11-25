@@ -388,6 +388,10 @@
                 @shutdown="closeSongsheetDialog"
                 v-if="songSheetVisible"></song-sheet>
 
+    <!-- 歌单详情弹出层 -->
+    <song-listdetails :songListId="songListId"
+                      @shut="closeSongListDialog"
+                      v-if="songListVisible"></song-listdetails>
   </div>
 </template>
 
@@ -396,12 +400,14 @@ import "../../assets/less/find.less";
 import { Indicator } from "mint-ui";
 import DailyRecommendation from "../../components/dailyRecommendation/recommendation";
 import SongSheet from "../../components/songSheet/songSheet";
+import SongListdetails from "../../components/songListDetails/songListDetails";
 
 export default {
   name: "find",
   components: {
     DailyRecommendation,
     SongSheet,
+    SongListdetails,
   },
   data () {
     return {
@@ -422,6 +428,8 @@ export default {
       newSong: [], //新歌新碟
       songSheetType: "推荐", //默认打开歌单类型
       songSheetVisible: false, //歌单列表弹出层
+      songListId: "",//歌单id
+      songListVisible: false,//歌单弹出层
     };
   },
   filters: {
@@ -579,6 +587,21 @@ export default {
       that.$store.commit("setplaylist", songAll);
       that.$store.commit("setserialNumber", 0);
       that.getplayMusic(songAll[0].resourceId, songAll[0]);
+    },
+    openSongListDialog: function (id) {
+      // dialog开关
+      this.songListId = id;
+      this.songListVisible = true;
+    },
+    closeSongListDialog: function () {
+      this.songListVisible = false;
+    },
+    playMusic: function (songinfos, songinfospicUrl) {
+      window.console.log(songinfos);
+      let songId = songinfos.id ? songinfos.id : songinfos.resourceId;
+      songinfos["picUrl"] = songinfospicUrl;
+      this.$store.commit("setsongInfo", JSON.stringify(songinfos));
+      this.getplayMusic(songId, songinfos);
     },
   },
   created () {
