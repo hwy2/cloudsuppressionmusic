@@ -154,7 +154,7 @@ fade {
 
                     .songsBar {
                         display: flex;
-                        padding: 18px 28px 0;
+                        padding: 18px 28px 18px;
 
                         .left,
                         .right {
@@ -181,10 +181,14 @@ fade {
 
                     .songWarp {
                         padding: 6px 28px;
+                        overflow: hidden;
+                        height: 56vh;
 
                         ul {
-                            padding-bottom: 110px;
+                            padding-bottom: 120px;
                             touch-action: pan-y;
+                            height: 100%;
+                            overflow: auto;
 
                             li {
                                 display: flex;
@@ -241,6 +245,10 @@ fade {
                                         }
                                     }
                                 }
+                            }
+
+                            li:last-child {
+                                margin-bottom: 1.6rem;
                             }
                         }
                     }

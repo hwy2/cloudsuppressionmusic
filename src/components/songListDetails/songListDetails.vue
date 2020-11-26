@@ -114,6 +114,7 @@
   </transition>
 </template>
 <script >
+import "../../assets/less/recommendation.less";
 import "../../assets/less/songListDetails.less";
 import { Toast } from "mint-ui";
 import { Indicator } from "mint-ui";

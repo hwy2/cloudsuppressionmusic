@@ -142,10 +142,10 @@ export default {
             res.data.weekData[res.data.weekData.length - 1].song.al.picUrl;
           that.$store.commit(
             "setsongInfo",
-            JSON.stringify(res.data.weekData[res.data.weekData.length - 1].song)
+            JSON.stringify(res.data.weekData[0].song)
           );
 
-          cookie.set("songInfo", res.data.weekData[res.data.weekData.length - 1].song);
+          cookie.set("songInfo", res.data.weekData[0].song);
 
           that.getMusicUrl();
         })

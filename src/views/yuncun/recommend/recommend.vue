@@ -8,7 +8,8 @@
                    id="loadmore">
         <ul class=" clearfix">
           <li v-for="(item,index) in videoList"
-              :key="index">
+              :key="index"
+              @click="openVideoDatails(item.data.urlInfo.id)">
             <div class="warp"
                  v-if="item.type == 1">
               <div class="image">
@@ -42,18 +43,28 @@
         </ul>
       </mt-loadmore>
     </div>
+    <video-details @closure="closeVideoDatails"
+                   v-if="videoDetailsVisible"
+                   :videoId='videoId'></video-details>
   </div>
 </template>
 <script>
-import "../../../assets/less/videoRecommend.less"
+import "../../../assets/less/videoRecommend.less";
+// import { Indicator } from "mint-ui";
+import VideoDetails from "../../../components/videoDetails/videoDetails";
 export default {
   name: "recommend",
+  components: {
+    VideoDetails
+  },
   data () {
     return {
       videoList: [],//视频
       videoGroupList: [],//视频标签列表
       allLoaded: false,
-      page: 1,
+      page: 1, //页码
+      videoDetailsVisible: false,//视频页
+      videoId: '',//视频id
     }
   },
   filters: {
@@ -123,27 +134,6 @@ export default {
         .then((res) => {
           window.console.log("获取视频推荐", JSON.stringify(res));
           this.videoList = res.data.datas;
-
-          this.videoList.forEach(function (item) {
-            if (item.data.urlInfo) {
-              item.data.coverUrl = "";
-              let video = document.createElement('video');
-              video.setAttribute('crossOrigin', 'Anonymous')
-              video.src = item.data.urlInfo.url;
-              //如果不设置currentTime，画出来的图片是空的
-              video.currentTime = 0.001;
-              video.addEventListener("loadeddata", function () {
-                let canvas = document.createElement('canvas');
-                canvas.width = 330;
-                canvas.height = 400;
-                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-                let url = canvas.toDataURL('image/png', 1);
-                item.data.coverUrl = url
-              });
-            }
-
-          })
-
         })
         .catch((err) => {
           window.console.log("获取视频推荐失败！", err);
@@ -184,11 +174,36 @@ export default {
           })
 
           this.videoList = [...videoList, ...playlists];
+          this.$refs.loadmore.onBottomLoaded();
         })
         .catch((err) => {
           window.console.log("获取视频推荐失败！", err);
+          this.$refs.loadmore.onBottomLoaded();
         });
+
     },
+    closeVideoDatails: function () {
+      this.videoDetailsVisible = false;
+    },
+    openVideoDatails: function (id) {
+      this.videoId = id;
+      this.videoDetailsVisible = true;
+    },
+    getVideoDetails: function (id) {
+      let videoDetails = [];
+      this.$axios
+        .get("/video/detail?id=" + id)
+        .then((res) => {
+          window.console.log("视频详情获取失败", res.data);
+          if (res.data.message == "success") {
+            videoDetails = res.data.data;
+          }
+        })
+        .catch((error) => {
+          window.console.log("视频详情获取失败", error);
+        });
+      return videoDetails;
+    }
   },
   created () {
     this.getVideoGroupList();

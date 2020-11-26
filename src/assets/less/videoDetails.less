@@ -1,0 +1,205 @@
+.videoDetails {
+    .topBanner {
+        position: fixed;
+        width: 750px;
+        background-color: transparent !important;
+        height: 112.5px !important;
+        z-index: 9999;
+
+        .back {
+            i {
+                color: #fff !important;
+            }
+        }
+    }
+
+    .videoMain {
+        width: 100%;
+        height: 100vh;
+
+        .videoPlay {
+            width: 100%;
+
+            video {
+                width: 100%;
+                height: 400px;
+                background: #000;
+            }
+        }
+
+        .videosub {
+            background-color: #fff;
+
+
+            .levelNavigation {
+                ul {
+                    height: 75px;
+                    background-color: #fff;
+                    box-shadow: 0 20px 10px #f8f8f8;
+                    font-family: Cambria,
+                        Cochin,
+                        Georgia,
+                        Times,
+                        'Times New Roman',
+                        serif;
+
+                    li {
+                        float: left;
+                        padding-left: 75px;
+                        width: 85px;
+
+                        p {
+                            font-size: 30px;
+                            color: #000;
+                            font-weight: bold;
+                            line-height: 75px;
+                        }
+                    }
+
+                    .active {
+                        p {
+                            position: relative;
+
+                            &::before {
+                                content: "";
+                                position: absolute;
+                                bottom: -2px;
+                                height: 5px;
+                                width: 60px;
+                                background-color: #04f88a;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .substance {
+                overflow: auto;
+                height: 56vh;
+                touch-action: pan-y;
+
+                .briefIntroduction {
+                    .creator {
+                        padding: 30px 0 30px 25px;
+
+                        img {
+                            width: 56px;
+                            height: 56px;
+                            border-radius: 60px;
+                            vertical-align: middle;
+                        }
+
+                        span {
+                            padding-left: 10px;
+                            color: #000;
+                            font-weight: bold;
+                            font-size: 28px;
+
+                        }
+                    }
+
+                    .videoName {
+                        padding: 0px 23px 30px 23px;
+
+                        p {
+                            font-size: 30px;
+                            color: #000;
+                            line-height: 1.5;
+                        }
+                    }
+
+                    .likePlaying {
+                        padding: 0 23px 30px 23px;
+
+                        p {
+                            width: 170px;
+                            float: left;
+                            color: #9a9a9a;
+
+                            i {
+                                font-size: 22px;
+                                vertical-align: baseline;
+                            }
+
+                            span {
+                                font-size: 18px;
+                            }
+                        }
+                    }
+                }
+
+                .discuss {
+                    ul {
+                        padding: 30px 0 30px 0;
+
+                        li {
+                            padding-bottom: 30px;
+
+                            .top {
+                                display: flex;
+                                padding: 0 15px;
+                                height: 80px;
+
+                                .left {
+                                    flex: 1;
+                                    padding: 12px 0;
+
+                                    img {
+                                        width: 56px;
+                                        height: 56px;
+                                        display: block;
+                                        margin: 0 auto;
+                                        border-radius: 56px;
+                                    }
+                                }
+
+                                .center {
+                                    padding: 0 0 0 15px;
+                                    flex: 6;
+
+                                    p:nth-of-type(1) {
+                                        color: #666;
+                                        font-size: 28px;
+                                        line-height: 1.5;
+                                        padding-bottom: 5px;
+                                    }
+
+                                    p:nth-of-type(2) {
+                                        font-size: 20px;
+                                        color: #999;
+
+                                    }
+                                }
+
+                                .right {
+                                    flex: 1;
+                                    color: #999;
+
+                                    i {
+                                        font-size: 20px;
+                                        vertical-align: baseline;
+                                    }
+
+                                    span {
+                                        font-size: 20px;
+                                    }
+                                }
+                            }
+
+                            .contentss {
+                                padding: 20px 30px 0 80px;
+
+                                p {
+                                    font-size: 30px;
+                                    color: #333;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
+}

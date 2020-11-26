@@ -87,6 +87,7 @@
   </div>
 </template>
 <script >
+import "../../assets/less/recommendation.less";
 import "../../assets/less/songSheet.less";
 // import { Toast } from "mint-ui";
 import { Indicator } from "mint-ui";
@@ -296,6 +297,7 @@ export default {
         .catch((error) => {
           Indicator.close();
           window.console.log("精品歌单获取失败", error);
+          this.$refs.loadmore.onBottomLoaded();
         });
     },
     openSongListDialog: function (id) {

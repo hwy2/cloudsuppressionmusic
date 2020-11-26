@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import "../../assets/less/recommendation.less";
 import "../../assets/less/playPanel.less";
 import Scroll from "./scroll/scroll";
 import Lyric from "lyric-parser";
