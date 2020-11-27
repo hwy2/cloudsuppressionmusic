@@ -1,5 +1,6 @@
 <template>
   <div class="recommend">
+
     <div class="videoList">
       <mt-loadmore :bottom-method="loadBottomVideo"
                    :bottom-all-loaded="allLoaded"
@@ -50,7 +51,7 @@
 </template>
 <script>
 import "../../../assets/less/videoRecommend.less";
-// import { Indicator } from "mint-ui";
+import { Indicator } from "mint-ui";
 import VideoDetails from "../../../components/videoDetails/videoDetails";
 export default {
   name: "recommend",
@@ -127,15 +128,18 @@ export default {
         });
     },
     getVideoList: function () {
+      Indicator.open("加载中...")
       // 获取视频推荐
       this.$axios({
         url: "/video/timeline/recommend",
       })
         .then((res) => {
-          window.console.log("获取视频推荐", JSON.stringify(res));
+          //   window.console.log("获取视频推荐", JSON.stringify(res));
           this.videoList = res.data.datas;
+          Indicator.close();
         })
         .catch((err) => {
+          Indicator.close();
           window.console.log("获取视频推荐失败！", err);
         });
     },
@@ -152,7 +156,6 @@ export default {
           let videoList = this.videoList;
           let playlists = res.data.datas;
           this.page++;
-          this.$refs.loadmore.$el.style.padding = "1.333333rem 0 0";
           playlists.forEach(function (item) {
             if (item.data.urlInfo) {
               item.data.coverUrl = "";
@@ -184,10 +187,12 @@ export default {
     },
     closeVideoDatails: function () {
       this.videoDetailsVisible = false;
+      this.$store.commit("setisShow", true);
     },
     openVideoDatails: function (id) {
       this.videoId = id;
       this.videoDetailsVisible = true;
+      this.$store.commit("setisShow", false);
     },
     getVideoDetails: function (id) {
       let videoDetails = [];

@@ -6,6 +6,7 @@
     ul {
         padding: 30px 0 30px 30px;
         height: 100%;
+        touch-action: pan-y;
 
         li {
             height: 550px;
@@ -20,11 +21,13 @@
                 width: 100%;
                 border-radius: 15px 15px 0 0;
                 position: relative;
+                overflow: hidden;
 
                 img {
                     border-radius: 15px 15px 0 0;
-                    width: 100%;
+                    width: 178%;
                     height: 100%;
+                    transform: translateX(-160px);
                 }
 
                 img:nth-of-type(2) {

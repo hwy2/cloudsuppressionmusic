@@ -57,6 +57,28 @@
                     <p><i class=" iconfont iconicon--"></i><span>{{videoDetails.playTime| retainDoubleDigit }}</span></p>
                     <p><i class=" iconfont icondianzan"></i><span>{{videoDetails.praisedCount}}</span></p>
                   </div>
+
+                  <div class="related">
+                    <div class="related-title">
+                      <p>
+                        相关视频
+                      </p>
+                    </div>
+                    <ul>
+                      <li v-for="(item,index) in relatedVideo"
+                          :key="index"
+                          @click="modifyInformation(item.vid)">
+                        <div class="left">
+                          <img :src="item.coverUrl"
+                               :alt="item.title">
+                        </div>
+                        <div class="right">
+                          <p>{{item.title}}</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
                 </div>
                 <div class="discuss"
                      v-if="showComments">
@@ -70,6 +92,8 @@
                           <div class="left">
                             <img :src="item.user.avatarUrl"
                                  :alt="item.user.nickname">
+                            <img v-if="item.pendantData"
+                                 :src="item.pendantData.imageUrl">
                           </div>
                           <div class="center">
                             <p>{{item.user.nickname}}</p>
@@ -112,6 +136,7 @@ export default {
       showComments: false,//显示评论
       page: 1,//页码
       allLoaded: false,
+      relatedVideo: [],//相关视频
     }
   },
   props: ["videoId"],
@@ -157,6 +182,7 @@ export default {
           window.console.log("视频url", res.data);
           this.videoUrl = res.data.urls[0].url;
           this.getVideoDetailInfo();
+          this.getrelatedVideoAll();
         })
         .catch((error) => {
           window.console.log("视频url获取失败", error);
@@ -220,6 +246,21 @@ export default {
           this.$refs.loadmore.onBottomLoaded();
         });
 
+    },
+    getrelatedVideoAll: function () {
+      this.$axios
+        .get("/related/allvideo?id=" + this.videoId)
+        .then((res) => {
+          window.console.log("相关视频：", res.data);
+          this.relatedVideo = res.data.data;
+        })
+        .catch((error) => {
+          window.console.log("相关视频获取失败", error);
+        });
+    },
+    modifyInformation: function (id) {
+      this.videoId = id;
+      this.getVideoDetail();
     }
 
   },

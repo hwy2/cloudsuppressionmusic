@@ -13,6 +13,7 @@ export default new Vuex.Store({
         serialNumber: 0, //播放列表序号
         musicSize: 0, //音乐长度
         isPlay: false, //播放状态 
+        isShow: true, //控制播放区的显示
     },
     getters: {
         getselected(state) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
         getisPlay(state) {
             return state.isPlay;
         },
+        getisShow(state) {
+            return state.isShow;
+        },
     },
     mutations: {
         setSelected(state, status) {
@@ -64,6 +68,9 @@ export default new Vuex.Store({
         },
         setisPlay(state, status) {
             state.isPlay = status;
+        },
+        setisShow(state, status) {
+            state.isShow = status;
         },
     },
     actions: {},

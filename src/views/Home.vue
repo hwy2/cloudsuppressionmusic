@@ -248,7 +248,8 @@
 
     <!-- 底部播放区 -->
     <div class="tabbar clearfix"
-         id="playArea">
+         id="playArea"
+         v-show="isShow">
       <div class="left clearfix"
            @click="openPanelDialog()">
         <div class="musicImg">
@@ -452,6 +453,16 @@ export default {
       set (v) {
         // 使用vuex中的mutations中定义好的方法来改变
         this.$store.commit("setisPlay", v);
+      },
+    },
+    isShow: {
+      //播放状态
+      get () {
+        return this.$store.state.isShow;
+      },
+      set (v) {
+        // 使用vuex中的mutations中定义好的方法来改变
+        this.$store.commit("setisShow", v);
       },
     },
   },

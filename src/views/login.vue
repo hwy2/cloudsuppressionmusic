@@ -92,10 +92,10 @@ export default {
           Indicator.close();
           if (res.data.code == 200) {
             cookie.set("profile", res.data.profile, {
-              expires: 1,
+              expires: 7,
             });
             cookie.set("account", res.data.account, {
-              expires: 1,
+              expires: 7,
             });
             Toast({
               message: "登录成功",
@@ -138,8 +138,8 @@ export default {
         })
         .then((res) => {
           window.console.log("播放记录", res.data);
-          res.data.weekData[res.data.weekData.length - 1].song["picUrl"] =
-            res.data.weekData[res.data.weekData.length - 1].song.al.picUrl;
+          res.data.weekData[0].song["picUrl"] =
+            res.data.weekData[0].song.al.picUrl;
           that.$store.commit(
             "setsongInfo",
             JSON.stringify(res.data.weekData[0].song)
