@@ -102,10 +102,11 @@ export default {
               position: "top",
               duration: 3000,
             });
-            that.getnewsong();
             that.$router.push({ name: "find" });
             that.$store.commit("setSelected", "find");
+            that.$store.commit("setisShow", true);
             //获取用户播放记录
+            that.getnewsong();
           } else {
             Toast({
               message: res.data.msg,

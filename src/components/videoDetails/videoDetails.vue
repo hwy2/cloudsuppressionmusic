@@ -7,7 +7,8 @@
         <div class="containerDiaLog"
              v-if="rendering">
           <!-- menu -->
-          <div class="topBanner  ">
+          <div class="topBanner  "
+               v-show="isHide">
             <div class="topnarBar">
               <div id="back"
                    @click="videoDetailsClose()">
@@ -19,13 +20,16 @@
 
           <div class="videoMain">
             <div class="videoPlay">
-              <video :src="videoUrl"
-                     preload="preload"
-                     controls="false"
+              <video preload="preload"
+                     controls="controls"
                      :poster="videoDetails.coverUrl"
                      autoplay="autoplay"
-                     @click="control()"
-                     id="videoControl">
+                     x5-video-player-type='h5'
+                     x5-video-player-fullscreen='true'
+                     x5-video-orientation='portraint'
+                     :src="videoUrl">
+                <source :src="videoUrl"
+                        type="video/mp4">
                 您的浏览器不支持 video 标签。
               </video>
             </div>
@@ -114,7 +118,6 @@
                   </mt-loadmore>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -137,6 +140,7 @@ export default {
       page: 1,//页码
       allLoaded: false,
       relatedVideo: [],//相关视频
+      isHide: true,
     }
   },
   props: ["videoId"],
@@ -187,18 +191,6 @@ export default {
         .catch((error) => {
           window.console.log("视频url获取失败", error);
         });
-    },
-    control: function () {
-      if (document.getElementById("videoControl").controls) {
-        setTimeout(() => {
-          document.getElementById("videoControl").controls = false
-        }, 1000)
-      } else {
-        document.getElementById("videoControl").controls = "controls";
-        setTimeout(() => {
-          document.getElementById("videoControl").controls = false
-        }, 1000)
-      }
     },
     getVideoDetailInfo: function () {
       this.$axios
@@ -261,14 +253,12 @@ export default {
     modifyInformation: function (id) {
       this.videoId = id;
       this.getVideoDetail();
-    }
-
+    },
   },
   created () {
     this.noScroll(); //禁止主页面滚动
     this.getVideoDetail();
   },
-
   destroyed () {
     //主页面可滑动
     this.canScroll();

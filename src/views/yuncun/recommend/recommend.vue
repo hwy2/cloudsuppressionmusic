@@ -156,25 +156,25 @@ export default {
           let videoList = this.videoList;
           let playlists = res.data.datas;
           this.page++;
-          playlists.forEach(function (item) {
-            if (item.data.urlInfo) {
-              item.data.coverUrl = "";
-              let video = document.createElement('video');
-              video.setAttribute('crossOrigin', 'Anonymous')
-              video.src = item.data.urlInfo.url;
-              //如果不设置currentTime，画出来的图片是空的
-              video.currentTime = 0.001;
-              video.addEventListener("loadeddata", function () {
-                let canvas = document.createElement('canvas');
-                canvas.width = 330;
-                canvas.height = 400;
-                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-                let url = canvas.toDataURL('image/png', 1);
-                item.data.coverUrl = url
-              });
-            }
+          //   playlists.forEach(function (item) {
+          //     if (item.data.urlInfo) {
+          //       item.data.coverUrl = "";
+          //       let video = document.createElement('video');
+          //       video.setAttribute('crossOrigin', 'Anonymous')
+          //       video.src = item.data.urlInfo.url;
+          //       //如果不设置currentTime，画出来的图片是空的
+          //       video.currentTime = 0.001;
+          //       video.addEventListener("loadeddata", function () {
+          //         let canvas = document.createElement('canvas');
+          //         canvas.width = 330;
+          //         canvas.height = 400;
+          //         canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+          //         let url = canvas.toDataURL('image/png', 1);
+          //         item.data.coverUrl = url
+          //       });
+          //     }
 
-          })
+          //   })
 
           this.videoList = [...videoList, ...playlists];
           this.$refs.loadmore.onBottomLoaded();

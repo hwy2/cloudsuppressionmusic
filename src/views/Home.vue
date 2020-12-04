@@ -217,7 +217,7 @@
               <i class="iconfont iconshezhi"></i>
               <span>设置</span>
             </div>
-            <div>
+            <div @click="logout()">
               <i class="iconfont icontuichu"></i>
               <span>退出</span>
             </div>
@@ -288,20 +288,21 @@
                 v-if="panelVisible"
                 :appthat="that"></panel-play>
 
-    <!-- 歌单列表弹出层 
-    <search @searchdown="closeSearchdialog" v-if="searchVisible"></search>-->
+    <!-- 歌单列表弹出层 -->
+    <search @searchdown="closeSearchdialog"
+            v-if="searchVisible"></search>
   </div>
 </template>
 
 <script>
 import "../assets/less/home.less";
 import cookie from "json-cookie";
-// import Search from "../components/search";
+import Search from "../components/search/search";
 import PanelPlay from "../components/playPanel/playPanel";
 
 export default {
   name: "Home",
-  components: { PanelPlay, },
+  components: { PanelPlay, Search },
   data () {
     return {
       popupVisible: false,
@@ -371,6 +372,22 @@ export default {
       that.$store.commit("setserialNumber", 0);
       that.playMusic(songAll[0], songAll[0].picUrl);
     },
+    logout: function () {
+      this.$axios
+        .get("/logout")
+        .then((res) => {
+          window.console.log("退出", res.data);
+          cookie.delete("userDetail");
+          cookie.delete("songInfo");
+          cookie.delete("account");
+          cookie.delete("store");
+          cookie.delete("profile");
+          window.location.reload();
+        })
+        .catch((error) => {
+          window.console.log("退出失败", error);
+        });
+    }
   },
   watch: {
     selected: function (newV, oldV) {
@@ -378,6 +395,7 @@ export default {
       window.console.log("上一个选择：" + oldV);
       this.$router.push({ name: newV });
       this.$store.commit("setSelected", newV);
+      cookie.set("store", this.$store.state);
     },
     popupVisible: function (newV) {
       if (newV) {

@@ -1,0 +1,421 @@
+.search {
+    touch-action: none;
+    user-select: none;
+
+    .topSearchBar {
+        display: flex;
+        height: 96px;
+        background-color: #fff;
+        touch-action: none;
+        padding-right: 30px;
+
+        .left {
+            flex: 1;
+            height: 96px;
+            text-align: center;
+            justify-content: center;
+            line-height: 96px;
+
+            i {
+                color: #666;
+                font-size: 50px;
+            }
+        }
+
+        .right {
+            flex: 9;
+            height: 96px;
+            touch-action: none;
+
+            #minsearch {
+                height: 96px;
+
+                .mint-searchbar {
+                    height: 100%;
+                    background-color: #fff;
+                    overflow: hidden;
+
+
+
+                    .mint-searchbar-inner {
+                        height: 88%;
+                        border-bottom: 1px solid rgb(187, 187, 187);
+
+                        .mintui-search {
+                            font-size: 30px;
+                            color: #d9d9d9;
+                            padding-right: 15px;
+                        }
+                    }
+                }
+
+                .mint-search-list {
+                    padding-top: 0;
+                }
+            }
+
+            .mint-search-list {
+                margin-top: 96px;
+                height: 0;
+            }
+        }
+    }
+
+    .classificationList {
+        height: 90px;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #fff;
+
+        .bgc {
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+            touch-action: pinch-zoom;
+
+            ul {
+                height: 50px;
+                line-height: 40px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                width: 110%;
+
+                li {
+                    float: left;
+                    height: 100%;
+                    line-height: 40px;
+                    width: 120px;
+                    text-align: center;
+                    user-select: none;
+
+                    p {
+                        font-size: 28px;
+                        color: #5d5d5d;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .active {
+
+                    position: relative;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        left: 50%;
+                        bottom: 8px;
+                        height: 3px;
+                        width: 40%;
+                        background-color: #04f88a;
+                        transform: translateX(-50%);
+                    }
+
+                }
+            }
+        }
+
+
+    }
+
+    .hotSearchList {
+        user-select: none;
+
+        .title {
+            padding: 50px 20px 20px;
+
+            p {
+                font-size: 28px;
+                font-weight: bold;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                border-bottom: 1px solid #ecebeb;
+                padding-bottom: 15px;
+            }
+        }
+
+        .details {
+            padding: 0 20px;
+
+            ul {
+                li {
+                    width: 50%;
+                    float: left;
+                    padding-bottom: 30px;
+                    font-size: 26px;
+                    user-select: none;
+
+                    span:nth-of-type(1) {
+                        width: 50px;
+                        text-align: center;
+                        display: inline-block;
+                        color: #999;
+                    }
+
+                    span:nth-of-type(2) {
+                        color: #666;
+                    }
+                }
+
+                li:nth-of-type(1),
+                li:nth-of-type(2),
+                li:nth-of-type(3) {
+                    span:nth-of-type(1) {
+                        color: #04f88a;
+                    }
+
+                    span:nth-of-type(2) {
+                        color: #000;
+                    }
+                }
+            }
+        }
+    }
+
+    .singleResults,
+    .playlistsResults,
+    .singer,
+    .album {
+        height: 86vh;
+        box-sizing: border-box;
+        overflow: auto;
+
+        ul {
+            touch-action: pan-y;
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+            padding: 20px 30px 0;
+            box-sizing: border-box;
+
+            li {
+                display: flex;
+
+                padding-bottom: 38px;
+
+                .left {
+                    flex: 1.2;
+
+                    img {
+                        height: 74px;
+                        width: 74px;
+                        border-radius: 5px;
+
+                    }
+                }
+
+                .center {
+                    flex: 8;
+
+                    p:nth-of-type(1) {
+                        width: 500px;
+                        display: block;
+                        overflow: hidden; //隐藏文字
+                        text-overflow: ellipsis; //显示...
+                        white-space: nowrap; //不换行
+
+                        span:nth-of-type(1) {
+                            font-size: 28px;
+                            color: #3c6695;
+                        }
+                    }
+
+                    p:nth-of-type(2) {
+                        font-size: 22px;
+                        color: #999;
+                    }
+                }
+
+                .right {
+                    flex: 2;
+
+                    .icon {
+                        display: flex;
+
+                        i {
+                            flex: 2;
+                            font-size: 40px;
+                        }
+                    }
+                }
+            }
+
+            li:last-child {
+                margin-bottom: 0.6rem;
+            }
+        }
+    }
+
+    .videos {
+        height: 86vh;
+        box-sizing: border-box;
+        overflow: auto;
+
+        ul {
+            padding: 10px 0px 50px 30px;
+
+            li {
+                padding-bottom: 38px;
+                width: 45.5%;
+                float: left;
+                margin-right: 30px;
+
+                .top {
+                    width: 100%;
+                    height: 400px;
+                    overflow: hidden;
+
+                    img {
+                        width: 150%;
+                        height: 150%;
+                        transform: translate(-20%, -20%);
+                    }
+                }
+
+                .center {
+                    box-sizing: border-box;
+                    padding: 20px 15px;
+                    height: 120px;
+
+                    p {
+                        font-size: 28px;
+                        line-height: 1.2;
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                        display: -webkit-box;
+                        box-sizing: border-box;
+                    }
+                }
+            }
+        }
+    }
+
+    .singer {
+        height: 86vh;
+        box-sizing: border-box;
+        overflow: auto;
+
+        ul {
+            touch-action: pan-y;
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+            padding: 20px 30px 0;
+            box-sizing: border-box;
+
+            li {
+                display: flex;
+
+                padding-bottom: 38px;
+
+                .left {
+                    flex: 1.2;
+
+                    img {
+                        height: 74px;
+                        width: 74px;
+                        border-radius: 74px;
+
+                    }
+                }
+
+                .center {
+                    flex: 8;
+                    padding-top: 15px;
+
+                    p:nth-of-type(1) {
+                        width: 500px;
+                        display: block;
+                        overflow: hidden; //隐藏文字
+                        text-overflow: ellipsis; //显示...
+                        white-space: nowrap; //不换行
+
+                        span:nth-of-type(1) {
+                            font-size: 28px;
+                            color: #3c6695;
+                        }
+                    }
+                }
+
+            }
+
+            li:last-child {
+                margin-bottom: 0.6rem;
+            }
+        }
+    }
+
+    .subscriber {
+        height: 86vh;
+        box-sizing: border-box;
+        overflow: auto;
+
+        ul {
+            touch-action: pan-y;
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+            padding: 20px 30px 0;
+            box-sizing: border-box;
+
+            li {
+                display: flex;
+
+                padding-bottom: 38px;
+
+                .left {
+                    flex: 1.2;
+
+                    img {
+                        height: 74px;
+                        width: 74px;
+                        border-radius: 74px;
+
+                    }
+                }
+
+                .center {
+                    flex: 8;
+
+                    p:nth-of-type(1) {
+                        width: 500px;
+                        display: block;
+                        overflow: hidden; //隐藏文字
+                        text-overflow: ellipsis; //显示...
+                        white-space: nowrap; //不换行
+
+                        span:nth-of-type(1) {
+                            font-size: 28px;
+                            color: #3c6695;
+                        }
+                    }
+
+                    p:nth-of-type(2) {
+                        font-size: 22px;
+                        color: #999;
+                    }
+                }
+
+                .right {
+                    flex: 2;
+
+                    .icon {
+                        display: flex;
+
+                        i {
+                            flex: 2;
+                            font-size: 40px;
+                        }
+                    }
+                }
+            }
+
+            li:last-child {
+                margin-bottom: 0.6rem;
+            }
+        }
+    }
+}

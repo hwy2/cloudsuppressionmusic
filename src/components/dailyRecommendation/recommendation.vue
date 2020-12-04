@@ -64,10 +64,6 @@
                   <li v-for="item in dailySongs"
                       :key="item.id"
                       @click="playMusic(item)">
-                    <div class="left">
-                      <img :src="item.al.picUrl"
-                           :alt="item.al.name" />
-                    </div>
                     <div class="center">
                       <p>
                         <span>{{ item.name }}</span>&nbsp;
