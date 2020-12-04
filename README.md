@@ -1,5 +1,7 @@
 # cloudsuppressionmusic
 
+移动端项目
+
 ## Project setup
 ```
 npm install
@@ -101,6 +103,18 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 4）歌单分类
 
 5）歌单分类获取相应的歌单
+
+#### 搜索 页面实现功能
+
+1）热搜列表
+
+2）搜索结果分类显示
+
+3）单曲播放
+
+4）歌单详情
+
+5）视频播放
 
 #### 登录 页面实现功能
 

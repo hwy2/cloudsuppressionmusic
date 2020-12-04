@@ -5,6 +5,7 @@
            ref="dialogWrapper">
         <div class="dialog-container"
              ref="viewBox">
+
           <!-- 搜索头 -->
           <div class="topSearchBar">
             <div class="left"
@@ -69,7 +70,8 @@
                          id="loadmore">
               <ul>
                 <li v-for="(item ,index) in singleList"
-                    :key="index">
+                    :key="index"
+                    @click="playMusic(item)">
                   <div class="center">
                     <p>
                       <span>{{ item.name }}</span>&nbsp;
@@ -99,7 +101,8 @@
                          id="loadmore">
               <ul>
                 <li v-for="(item ,index) in playlistsList"
-                    :key="index">
+                    :key="index"
+                    @click="openSongListDialog(item.id)">
                   <div class="left">
                     <img :src="item.coverImgUrl"
                          :alt="item.name">
@@ -124,7 +127,8 @@
                          id="loadmore">
               <ul class=" clearfix">
                 <li v-for="(item ,index) in videosList"
-                    :key="index">
+                    :key="index"
+                    @click="openVideoDatails(item.vid)">
                   <div class="top">
                     <img :src="item.coverUrl"
                          :alt="item.title">
@@ -220,14 +224,30 @@
       </div>
     </div>
 
+    <!-- 歌单详情弹出层 -->
+    <song-listdetails :songListId="songListId"
+                      @shut="closeSongListDialog"
+                      v-if="songListVisible"></song-listdetails>
+
+    <!--视频页详情-->
+    <video-details @closure="closeVideoDatails"
+                   v-if="videoDetailsVisible"
+                   :videoId='videoId'></video-details>
   </div>
 </template>
 
 <script>
 import "../../assets/less/recommendation.less";
 import "../../assets/less/search.less";
+import SongListdetails from "../songListDetails/songListDetails";
+import VideoDetails from "../videoDetails/videoDetails";
+
 export default {
   name: "search",
+  components: {
+    SongListdetails,
+    VideoDetails
+  },
   data () {
     return {
       searchvalue: "",
@@ -279,6 +299,12 @@ export default {
       subscriberVisible: false,//用户显示
       allLoaded: false,//单曲到达底部
       page: 1,//单曲页数
+      songinfo: "",//歌曲信息
+      songListId: '',//歌单id
+      songListVisible: false,//歌单弹出层
+      videoId: '',//视频id
+      videoDetailsVisible: false,//视频弹出层
+
     };
   },
   methods: {
@@ -534,7 +560,48 @@ export default {
           this.$refs.loadmore.onBottomLoaded();
           window.console.log("获取失败", error);
         });
-    }
+    },
+    playMusic: function (songinfos) {
+      this.getSongDetail(songinfos.id, songinfos);
+
+    },
+    getSongDetail: function (id, songinfos) {
+      this.$axios
+        .get("/song/detail", {
+          params: {
+            ids: id
+          },
+        })
+        .then((res) => {
+          window.console.log("歌曲详情搜索", res.data);
+          this.songinfo = res.data;
+
+
+          let songId = id;
+          songinfos["picUrl"] = this.songinfo.songs[0].al.picUrl;
+          this.$store.commit("setsongInfo", JSON.stringify(songinfos));
+          this.getplayMusic(songId, songinfos);
+        })
+        .catch((error) => {
+          this.$refs.loadmore.onBottomLoaded();
+          window.console.log("获取失败", error);
+        });
+    },
+    openSongListDialog: function (id) {
+      // dialog开关
+      this.songListId = id;
+      this.songListVisible = true;
+    },
+    closeSongListDialog: function () {
+      this.songListVisible = false;
+    },
+    closeVideoDatails: function () {
+      this.videoDetailsVisible = false;
+    },
+    openVideoDatails: function (id) {
+      this.videoId = id;
+      this.videoDetailsVisible = true;
+    },
 
   },
   created () {
