@@ -392,6 +392,9 @@
     <song-listdetails :songListId="songListId"
                       @shut="closeSongListDialog"
                       v-if="songListVisible"></song-listdetails>
+    <!-- 歌单详情弹出层 -->
+    <ranking-list @rankingListDown="closeRankingListDialog"
+                  v-if="rankingListVisible"></ranking-list>
   </div>
 </template>
 
@@ -401,6 +404,7 @@ import { Indicator } from "mint-ui";
 import DailyRecommendation from "../../components/dailyRecommendation/recommendation";
 import SongSheet from "../../components/songSheet/songSheet";
 import SongListdetails from "../../components/songListDetails/songListDetails";
+import RankingList from "../../components/rankingList/rankingList";
 
 export default {
   name: "find",
@@ -408,6 +412,7 @@ export default {
     DailyRecommendation,
     SongSheet,
     SongListdetails,
+    RankingList,
   },
   data () {
     return {
@@ -430,6 +435,7 @@ export default {
       songSheetVisible: false, //歌单列表弹出层
       songListId: "",//歌单id
       songListVisible: false,//歌单弹出层
+      rankingListVisible: false,//排行榜弹出层
     };
   },
   filters: {
@@ -554,12 +560,11 @@ export default {
         case 0:
           this.openDaily();
           break;
-
         case 1:
           this.openSongsheetDialog("推荐");
           break;
         case 2:
-          this.openSongsheetDialog();
+          this.openRankingListDialog();
           break;
       }
     },
@@ -603,6 +608,12 @@ export default {
       this.$store.commit("setsongInfo", JSON.stringify(songinfos));
       this.getplayMusic(songId, songinfos);
     },
+    closeRankingListDialog: function () {
+      this.rankingListVisible = false;
+    },
+    openRankingListDialog: function () {
+      this.rankingListVisible = true;
+    }
   },
   created () {
     Indicator.open("加载中...");

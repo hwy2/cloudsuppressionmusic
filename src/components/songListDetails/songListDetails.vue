@@ -12,7 +12,7 @@
               <div class="topnarBar">
                 <div id="back"
                      @click="songListClose()">
-                  <i class="iconfont iconfanhui"></i>
+                  <i class="iconfont iconfanhui1"></i>
                   <span>{{songInformation.name}}</span>
                 </div>
                 <div class="more">

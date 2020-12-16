@@ -11,7 +11,7 @@
             <div class="topnarBar">
               <div id="back"
                    @click="songListClose()">
-                <i class="iconfont iconfanhui"></i>
+                <i class="iconfont iconfanhui1"></i>
                 <span>歌单广场</span>
               </div>
             </div>

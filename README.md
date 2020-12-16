@@ -104,6 +104,13 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 5）歌单分类获取相应的歌单
 
+#### 排行榜 页面实现功能
+
+1）所有榜单显示
+
+2）榜单详情
+
+
 #### 搜索 页面实现功能
 
 1）热搜列表

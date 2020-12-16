@@ -1,0 +1,156 @@
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .rankingListBar {
+  background-color: #fff;
+  height: 100px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .rankingListBar .topnarBar {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0.4rem 0.426667rem 0;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .rankingListBar .topnarBar #back i {
+  font-size: 45px;
+  vertical-align: middle;
+  margin-right: 15px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .rankingListBar .topnarBar #back span {
+  font-size: 30px;
+  vertical-align: middle;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail {
+  height: 84.5vh;
+  overflow: auto;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .listRecommendation .top,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .featureList .top,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .globalList .top,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .regionalList .top,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .musicStyleList .top {
+  padding: 15px 0;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .listRecommendation .top p,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .featureList .top p,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .globalList .top p,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .regionalList .top p,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .musicStyleList .top p {
+  font-size: 28px;
+  font-weight: bold;
+  color: black;
+  padding-left: 32px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .listRecommendation ul,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .featureList ul,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .globalList ul,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .regionalList ul,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .musicStyleList ul {
+  padding: 0 32px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .listRecommendation ul li,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .featureList ul li,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .globalList ul li,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .regionalList ul li,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .musicStyleList ul li {
+  width: 33.2%;
+  height: 270px;
+  float: left;
+  border-radius: 15px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .listRecommendation ul li .image,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .featureList ul li .image,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .globalList ul li .image,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .regionalList ul li .image,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .musicStyleList ul li .image {
+  position: relative;
+  width: 190px;
+  border-radius: 15px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .listRecommendation ul li .image::before,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .featureList ul li .image::before,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .globalList ul li .image::before,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .regionalList ul li .image::before,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .musicStyleList ul li .image::before {
+  content: "";
+  width: 190px;
+  height: 190px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  box-shadow: inset 0px -3px 10px #c0c0c0;
+  border-radius: 15px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .listRecommendation ul li .image img,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .featureList ul li .image img,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .globalList ul li .image img,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .regionalList ul li .image img,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .musicStyleList ul li .image img {
+  width: 190px;
+  height: 190px;
+  border-radius: 15px;
+  display: block;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .listRecommendation ul li .image span,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .featureList ul li .image span,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .globalList ul li .image span,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .regionalList ul li .image span,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .musicStyleList ul li .image span {
+  position: absolute;
+  bottom: 15px;
+  left: 25px;
+  color: #fff;
+  font-size: 20px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .listRecommendation ul li p,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .featureList ul li p,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .globalList ul li p,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .regionalList ul li p,
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .musicStyleList ul li p {
+  font-size: 24px;
+  color: #1d1d1d;
+  padding: 10px 0 10px 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .officialList .top {
+  padding: 15px 0;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .officialList .top p {
+  font-size: 28px;
+  font-weight: bold;
+  color: black;
+  padding-left: 32px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .officialList ul {
+  padding: 0 32px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .officialList ul li {
+  width: 100%;
+  height: 190px;
+  float: left;
+  display: flex;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .officialList ul li .left {
+  flex: 2;
+  position: relative;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .officialList ul li .left img {
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  display: block;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .officialList ul li .left span {
+  position: absolute;
+  bottom: 15px;
+  left: 25px;
+  color: #fff;
+  font-size: 20px;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .officialList ul li .right {
+  flex: 5;
+  padding: 15px 0 0 15px;
+  box-sizing: border-box;
+}
+.dialog-mask.rankingList .dialog-wrapper .dialog-container .containerDiaLog .ListDetail .officialList ul li .right span {
+  display: block;
+  padding-bottom: 15px;
+  font-size: 25px;
+  color: #494949;
+}

@@ -609,7 +609,7 @@ export default {
     this.getSearchhot();
   },
   destroyed () {
-    //主页面可滑动
+    //主页面可滑动  
     this.canScroll();
   },
 };

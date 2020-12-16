@@ -213,9 +213,9 @@ export default {
           this.userDetail = res.data;
           this.getUserPlaylist(uid);
 
-          cookie.set("userDetail", this.userDetail, {
-            expires: 7,
-          });
+          //   cookie.set("userDetail", this.userDetail, {
+          //     expires: 7,
+          //   });
         })
         .catch((error) => {
           window.console.log("获取失败！/n" + error);
