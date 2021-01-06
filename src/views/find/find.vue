@@ -227,7 +227,7 @@
                   :showIndicators="false">
           <mt-swipe-item>
             <ul class="smallList">
-              <li v-for="(song, indexs) in newSong.creatives[2].resources"
+              <li v-for="(song, indexs) in newSong.creatives[0].resources"
                   :key="indexs"
                   @click="playMusic(song.resourceExtInfo.songData, song.uiElement.image.imageUrl)">
                 <div class="left">
@@ -280,7 +280,7 @@
                   :showIndicators="false">
           <mt-swipe-item>
             <ul class="smallList">
-              <li v-for="(song, indexs) in newSong.creatives[4].resources"
+              <li v-for="(song, indexs) in newSong.creatives[2].resources"
                   :key="indexs">
                 <div class="left">
                   <img :src="song.uiElement.image.imageUrl"
@@ -299,8 +299,7 @@
           <mt-swipe-item>
             <ul class="smallList">
               <li v-for="(song, indexs) in newSong.creatives[3].resources"
-                  :key="indexs"
-                  @click="playMusic(song.resourceExtInfo.songData, song.uiElement.image.imageUrl)">
+                  :key="indexs">
                 <div class="left">
                   <img :src="song.uiElement.image.imageUrl"
                        alt="d" />
@@ -530,6 +529,7 @@ export default {
                 if (item.creatives[0].uiElement.mainTitle) {
                   if (item.creatives[0].uiElement.mainTitle.title == "新歌") {
                     that.newSong = item;
+                    window.console.log(that.newSong);
                   }
                 }
               }

@@ -38,8 +38,9 @@
                   <span>{{ profile.nickname }}</span>
                 </div>
                 <div class="right clearfix">
-                  <a href="javascript:void(0)">
-                    <i class="iconfont iconqiandao"></i>签到
+                  <a href="javascript:void(0)"
+                     @click="dailySignin()">
+                    <i class="iconfont iconqiandao"></i>{{signIn}}
                   </a>
                 </div>
               </div>
@@ -235,7 +236,7 @@
       <mt-navbar v-model="selected">
         <mt-tab-item id="me">我的</mt-tab-item>
         <mt-tab-item id="find">发现</mt-tab-item>
-        <mt-tab-item id="yuncun">云村</mt-tab-item>
+        <mt-tab-item id="yuncun">视频</mt-tab-item>
         <!--<mt-tab-item id="videoY">视频</mt-tab-item>-->
       </mt-navbar>
       <div class="search">
@@ -299,6 +300,7 @@ import "../assets/less/home.less";
 import cookie from "json-cookie";
 import Search from "../components/search/search";
 import PanelPlay from "../components/playPanel/playPanel";
+import { Toast } from "mint-ui";
 
 export default {
   name: "Home",
@@ -310,6 +312,7 @@ export default {
       profile: [],//用户信息
       panelVisible: false,//播放详情页面
       that: this,
+      signIn: "签到"
     };
   },
   methods: {
@@ -387,6 +390,27 @@ export default {
         .catch((error) => {
           window.console.log("退出失败", error);
         });
+    },
+    dailySignin: function () {
+      this.$axios({
+        url: "/daily_signin",
+        params: {
+          type: 0,
+        }
+      }).then((res) => {
+        window.console.log(res);
+        if (res.data.code === 200) {
+          this.signIn = "已签到";
+          Toast({
+            message: "签到成功",
+            position: "top",
+            duration: 3000,
+          });
+        }
+
+      }).catch((error) => {
+        window.console.log(error);
+      })
     }
   },
   watch: {

@@ -143,7 +143,7 @@ export default {
       isHide: true,
     }
   },
-  props: ["videoId"],
+  props: ["videoId", 'videoType'],
   filters: {
     retainDoubleDigit: function (data) {
       // 将数据转万
@@ -254,10 +254,39 @@ export default {
       this.videoId = id;
       this.getVideoDetail();
     },
+    getMVDetailInfo: function () {
+      this.$axios
+        .get("/mv/detail?mvid=" + this.videoId)
+        .then((res) => {
+          window.console.log("MV详情：", res.data);
+          this.videoDetails = res.data.data;
+          this.rendering = true;
+          this.getMVurl();
+        })
+        .catch((error) => {
+          window.console.log("MV详情：", error);
+          this.videoDetails.data
+        });
+    },
+    getMVurl: function () {
+      this.$axios
+        .get("/mv/url?id=" + this.videoId)
+        .then((res) => {
+          window.console.log("MVURL详情：", res.data);
+        })
+        .catch((error) => {
+          window.console.log("MVURL详情：", error);
+        });
+    }
   },
   created () {
     this.noScroll(); //禁止主页面滚动
-    this.getVideoDetail();
+    if (this.videoType == 'mv') {
+      this.getMVDetailInfo()
+    } else {
+      this.getVideoDetail();
+    }
+
   },
   destroyed () {
     //主页面可滑动

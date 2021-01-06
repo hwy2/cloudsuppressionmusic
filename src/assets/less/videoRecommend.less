@@ -83,3 +83,35 @@
         }
     }
 }
+
+.videoNavigationbar {
+    overflow: auto;
+    touch-action: pan-x;
+    height: 52.5px;
+    padding: 15px 0 0;
+
+    ul {
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 200%;
+        height: 100%;
+
+        li {
+            float: left;
+            width: 1.933333rem;
+            margin-right: 0.266667rem;
+            font-size: 0.373333rem;
+            color: #545454;
+            text-align: center;
+            touch-action: pan-x;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .active {
+            color: #04f88a;
+            font-size: .386667rem;
+        }
+    }
+}

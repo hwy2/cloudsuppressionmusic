@@ -1,12 +1,12 @@
 <template>
   <div class="yuncun">
     <!-- 顶部导航栏 -->
-    <div class="navigation">
+    <!-- <div class="navigation">
       <mt-navbar v-model="selected">
         <mt-tab-item id="square">广场</mt-tab-item>
         <mt-tab-item id="follow">关注</mt-tab-item>
       </mt-navbar>
-    </div>
+    </div> -->
     <router-view />
   </div>
 </template>

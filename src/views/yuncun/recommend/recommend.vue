@@ -1,6 +1,15 @@
 <template>
   <div class="recommend">
-
+    <!-- 导航栏 -->
+    <div class="videoNavigationbar">
+      <ul class="clearfix">
+        <li v-for="(list,index) in videoGroupList"
+            :key="index"
+            @click="setVideoGroupID(list.id,index)">
+          <p :class="list.active?'active':''">{{list.name}}</p>
+        </li>
+      </ul>
+    </div>
     <div class="videoList">
       <mt-loadmore :bottom-method="loadBottomVideo"
                    :bottom-all-loaded="allLoaded"
@@ -9,10 +18,10 @@
                    id="loadmore">
         <ul class=" clearfix">
           <li v-for="(item,index) in videoList"
-              :key="index"
-              @click="openVideoDatails(item.data.urlInfo.id)">
+              :key="index">
             <div class="warp"
-                 v-if="item.type == 1">
+                 v-if="item.type == 1"
+                 @click="openVideoDatails(item.data.vid)">
               <div class="image">
                 <img :src="item.data.coverUrl"
                      :alt="item.data.title"
@@ -31,14 +40,20 @@
               </div>
             </div>
             <div class="warp"
-                 v-else>
+                 v-else
+                 @click="openVideoDatails(item.data.id)">
               <div class="image">
-                <img :src="item.data.liveData.liveRoom.coverUrl"
-                     :alt="item.data.liveData.liveRoom.title">
+                <img :src="item.data.coverUrl"
+                     :alt="item.data.name">
               </div>
               <p class="description">
-                {{item.data.liveData.liveRoom.title}}
+                {{item.data.name}}
               </p>
+
+              <div class="items">
+                <p><i class=" iconfont iconicon--"></i><span>{{item.data.playCount| retainDoubleDigit }}</span></p>
+                <p><i class=" iconfont iconshoucang"></i><span>{{item.data.likeCount}}</span></p>
+              </div>
             </div>
           </li>
         </ul>
@@ -46,7 +61,8 @@
     </div>
     <video-details @closure="closeVideoDatails"
                    v-if="videoDetailsVisible"
-                   :videoId='videoId'></video-details>
+                   :videoId='videoId'
+                   :videoType="videoType"></video-details>
   </div>
 </template>
 <script>
@@ -66,6 +82,8 @@ export default {
       page: 1, //页码
       videoDetailsVisible: false,//视频页
       videoId: '',//视频id
+      videoGroupId: '',//视频分类id 
+      videoType: "video",
     }
   },
   filters: {
@@ -120,8 +138,13 @@ export default {
       })
         .then((res) => {
           window.console.log("获取视频标签列表", res);
-          this.videoGroupList = res.data;
-
+          this.videoGroupList = res.data.data;
+          this.videoGroupId = res.data.data[0].id
+          this.videoGroupList.forEach((item) => {
+            item['active'] = false;
+          })
+          this.videoGroupList[0].active = true;
+          this.getVideoList();
         })
         .catch((err) => {
           window.console.log("获取视频标签列表失败！", err);
@@ -131,10 +154,13 @@ export default {
       Indicator.open("加载中...")
       // 获取视频推荐
       this.$axios({
-        url: "/video/timeline/recommend",
+        url: "/video/group",
+        params: {
+          id: this.videoGroupId
+        }
       })
         .then((res) => {
-          //   window.console.log("获取视频推荐", JSON.stringify(res));
+          window.console.log("获取视频推荐", JSON.stringify(res));
           this.videoList = res.data.datas;
           Indicator.close();
         })
@@ -146,9 +172,10 @@ export default {
     loadBottomVideo: function () {
       // 上拉加载
       this.$axios({
-        url: "/video/timeline/recommend",
+        url: "/video/group",
         params: {
           offset: this.page,
+          id: this.videoGroupId
         },
       })
         .then((res) => {
@@ -208,11 +235,23 @@ export default {
           window.console.log("视频详情获取失败", error);
         });
       return videoDetails;
+    },
+    setVideoGroupID: function (id, index) {
+      this.videoGroupId = id;
+      this.videoGroupList.forEach((item) => {
+        item['active'] = false;
+      })
+      this.videoGroupList[index].active = true;
+      if (id === 1000) {
+        this.videoType = "mv";
+      } else {
+        this.videoType = "video";
+      }
+      this.getVideoList();
     }
   },
   created () {
     this.getVideoGroupList();
-    this.getVideoList();
   },
 }
 </script>
