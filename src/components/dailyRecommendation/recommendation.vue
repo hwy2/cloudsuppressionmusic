@@ -64,6 +64,11 @@
                   <li v-for="item in dailySongs"
                       :key="item.id"
                       @click="playMusic(item)">
+
+                    <div class="left">
+                      <img :src="item.al.picUrl"
+                           alt="d" />
+                    </div>
                     <div class="center">
                       <p>
                         <span>{{ item.name }}</span>&nbsp;
@@ -180,7 +185,7 @@ export default {
             that.backgroudURl =
               "url(" +
               res.data.data.dailySongs[0].al.picUrl +
-              ") no-repeat center center";
+              ") no-repeat center center;background-size: cover;";
 
             that.dailySongs = res.data.data.dailySongs;
             that.$store.commit(
