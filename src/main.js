@@ -32,9 +32,9 @@ let host = window.location.host; //主机
 let reg = /^localhost+/;
 if (reg.test(host)) {
     //若本地项目调试使用
-    Axios.defaults.baseURL = 'https://3dcw.cn:5005';
+    Axios.defaults.baseURL = 'https://3dcw.cn:3000';
 } else {
-    Axios.defaults.baseURL = 'https://3dcw.cn:5005';
+    Axios.defaults.baseURL = 'https://wx.3dcw.cn';
 }
 Axios.defaults.headers = {
     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"

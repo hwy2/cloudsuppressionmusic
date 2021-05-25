@@ -269,8 +269,10 @@ export default {
       });
       let that = this;
       // 获取心动模式音乐
-      this.$axios
-        .get("/playmode/intelligence/list?id=" + this.songId + "&pid=" + this.songListId)
+      this.$axios({
+        url: "/playmode/intelligence/list",
+        params: { id: this.songId, pid: this.songListId, cookie: cookie.get("cookie") }
+      })
         .then(res => {
           window.console.log("心动模式音乐：", res.data);
           that.playMusic(res.data.data[0].songInfo);
@@ -300,8 +302,9 @@ export default {
     }
   },
   created () {
-    let account = cookie.get("account");
-    this.getUserDetail(account.id);
+    let profile = cookie.get("profile");
+    window.console.log(profile);
+    this.getUserDetail(profile.userId);
   },
 };
 </script>

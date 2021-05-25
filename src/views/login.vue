@@ -3,6 +3,8 @@
     <div class="topProfile">
       <div class="portrait">
         <img src="../assets/logo.png" />
+        <div class="vr_wrap"></div>
+        <div class="vr_wrap2"></div>
       </div>
       <div class="welcome">
         <p>Welcome back!</p>
@@ -26,7 +28,7 @@
                    v-model="userPassword" />
             <i class="iconfont iconmima"></i>
           </label>
-          <p @click="sorry()">Forget the password?</p>
+          <p @click="sorry()">使用网易云账号登录</p>
         </div>
 
         <div class="row">
@@ -94,7 +96,7 @@ export default {
             cookie.set("profile", res.data.profile, {
               expires: 7,
             });
-            cookie.set("account", res.data.account, {
+            cookie.set("cookie", res.data.cookie, {
               expires: 7,
             });
             Toast({

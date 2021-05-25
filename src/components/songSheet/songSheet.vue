@@ -349,7 +349,7 @@ export default {
         }
       }
 
-
+      this.highqualityList = [];
       this.gethighquality(checkTag, name);
       this.popupSongVisible = false;
       this.page == 1;

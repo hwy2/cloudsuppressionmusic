@@ -7,7 +7,7 @@
              ref="viewBox">
           <!-- song banner -->
           <div class="topBanner"
-               :style="{ background: backgroudURl }">
+               :style='topBanner'>
             <div class="topnarBar">
               <div id="back"
                    @click="dialogClose()">
@@ -98,7 +98,6 @@
 
 <script >
 import "../../assets/less/recommendation.less";
-import { Toast } from "mint-ui";
 import { Indicator } from "mint-ui";
 import cookie from "json-cookie";
 
@@ -108,7 +107,9 @@ export default {
     return {
       month: "",
       day: "",
-      backgroudURl: "",
+      topBanner: {
+        "background": ""
+      }
     };
   },
   computed: {
@@ -130,21 +131,27 @@ export default {
     getDailyMusic: function () {
       Indicator.open("加载中...");
       let that = this;
-      // 获取每日推荐歌曲
-      this.$axios
-        .post("/recommend/songs")
+      // 获取每日推荐歌曲          cookie: cookie.get("cookie")
+      this.$axios({
+        url: "/recommend/songs",
+        method: 'GET',
+        params: {
+          cookie: cookie.get("cookie")
+        },
+        withCredentials: true
+      })
         .then((res) => {
           //   window.console.log("每日推荐", JSON.stringify(res.data));
           if (res.data.code === 200) {
-            this.backgroudURl =
-              "url(" +
+            that.topBanner.background =
+              'url("' +
               res.data.data.dailySongs[0].al.picUrl +
-              ") no-repeat center center";
+              '") ';
 
-            that.dailySongs = JSON.stringify(res.data.data.dailySongs);
+            that.dailySongs = res.data.data.dailySongs;
             that.$store.commit(
               "setdailySongs",
-              JSON.stringify(res.data.data.dailySongs)
+              res.data.data.dailySongs
             );
             Indicator.close();
           }
@@ -171,41 +178,7 @@ export default {
     this.month =
       data.getMonth() < 9 ? "0" + (data.getMonth() + 1) : data.getMonth() + 1;
     this.day = data.getDate() <= 9 ? "0" + data.getDate() : data.getDate();
-  },
-  beforeCreate () {
-
-    if (cookie.get("profile")) {
-      let that = this;
-      // 获取每日推荐歌曲
-      this.$axios
-        .post("/recommend/songs")
-        .then((res) => {
-          window.console.log("每日推荐", JSON.stringify(res.data));
-          if (res.data.code === 200) {
-            that.backgroudURl =
-              "url(" +
-              res.data.data.dailySongs[0].al.picUrl +
-              ") no-repeat center center;background-size: cover;";
-
-            that.dailySongs = res.data.data.dailySongs;
-            that.$store.commit(
-              "setdailySongs",
-              res.data.data.dailySongs
-            );
-            Indicator.close();
-          }
-        })
-        .catch((error) => {
-          window.console.log("每日推荐获取失败！/n" + error);
-        });
-    } else {
-      Toast({
-        message: "请登录后再查看",
-        position: "top",
-        duration: 3000,
-      });
-    }
-
+    this.getDailyMusic();
   },
   destroyed () {
     //主页面可滑动

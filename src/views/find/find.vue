@@ -20,7 +20,7 @@
       <ul class>
         <li v-for="(item, index) in iconList"
             :key="index"
-            @click="middleMethods(index)">
+            @click="middleMethods(item.name)">
           <div class>
             <img :src="item.iconUrl"
                  :alt="item.name" />
@@ -404,7 +404,8 @@ import DailyRecommendation from "../../components/dailyRecommendation/recommenda
 import SongSheet from "../../components/songSheet/songSheet";
 import SongListdetails from "../../components/songListDetails/songListDetails";
 import RankingList from "../../components/rankingList/rankingList";
-
+import cookie from "json-cookie";
+import { Toast } from "mint-ui";
 export default {
   name: "find",
   components: {
@@ -484,7 +485,7 @@ export default {
       this.$axios({
         url: "/homepage/block/page",
         params: {
-          refresh: true,
+          refresh: true
         },
         withCredentials: false
       })
@@ -557,13 +558,21 @@ export default {
     middleMethods: function (type) {
       //根据index打开相应的方法
       switch (type) {
-        case 0:
-          this.openDaily();
+        case '每日推荐':
+          if (cookie.get("cookie")) {
+            this.openDaily();
+          } else {
+            Toast({
+              message: "请登录后再查看",
+              position: "top",
+              duration: 3000,
+            });
+          }
           break;
-        case 1:
+        case "歌单":
           this.openSongsheetDialog("推荐");
           break;
-        case 2:
+        case "排行榜":
           this.openRankingListDialog();
           break;
       }

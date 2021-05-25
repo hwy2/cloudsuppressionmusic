@@ -563,7 +563,6 @@ export default {
     },
     playMusic: function (songinfos) {
       this.getSongDetail(songinfos.id, songinfos);
-
     },
     getSongDetail: function (id, songinfos) {
       this.$axios
