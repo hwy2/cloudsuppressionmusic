@@ -297,7 +297,6 @@
 
 <script>
 import "../assets/less/home.less";
-import cookie from "json-cookie";
 import Search from "../components/search/search";
 import PanelPlay from "../components/playPanel/playPanel";
 import { Toast } from "mint-ui";
@@ -339,14 +338,7 @@ export default {
     },
     playAudio: function () {
       // 播放音乐，并修改状态
-      // window.console.log(document.getElementById("audioPlayer"));
-      this.$refs.audio.play();
-      this.$store.commit("setisPlay", true);
-      let musicrotateAn = document.getElementById("musicImg");
-      musicrotateAn.setAttribute(
-        "style",
-        "-webkit-animation: rotateAn 8s linear infinite; animation: rotateAn 8s linear infinite;"
-      );
+      this.playAudioControl(this);
     },
     pauseAudio: function () {
       // 暂停音乐，并修改状态
@@ -376,15 +368,16 @@ export default {
       that.playMusic(songAll[0], songAll[0].picUrl);
     },
     logout: function () {
+      let _this = this;
       this.$axios
         .get("/logout")
         .then((res) => {
           window.console.log("退出", res.data);
-          cookie.delete("userDetail");
-          cookie.delete("songInfo");
-          cookie.delete("account");
-          cookie.delete("store");
-          cookie.delete("profile");
+          _this.cookiesControl("remove", "userDetail");
+          _this.cookiesControl("remove", "songInfo");
+          _this.cookiesControl("remove", "account");
+          _this.cookiesControl("remove", "store");
+          _this.cookiesControl("remove", "profile");
           window.location.reload();
         })
         .catch((error) => {
@@ -419,7 +412,8 @@ export default {
       window.console.log("上一个选择：" + oldV);
       this.$router.push({ name: newV });
       this.$store.commit("setSelected", newV);
-      cookie.set("store", this.$store.state);
+      this.cookiesControl("remove", "store");
+      this.cookiesControl("set", "store", this.$store.state);
     },
     popupVisible: function (newV) {
       if (newV) {
@@ -509,7 +503,7 @@ export default {
     },
   },
   created () {
-    let profile = cookie.get("profile");
+    let profile = this.cookiesControl("get", "profile");
     this.profile = profile;
   },
 };

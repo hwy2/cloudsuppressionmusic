@@ -103,9 +103,9 @@ export default {
   data () {
     return {
       that: this,
-      percentage: 0,
-      currentTimes: 0,
-      durations: 0,
+      percentage: 0,//进度
+      currentTimes: 0,//当前时间
+      durations: 0,//持续时间
       currentLyric: [],
       currentLineNum: 0,
       playingLyric: "",
@@ -220,6 +220,7 @@ export default {
       let currentTime = this.appthat.$refs.audio.currentTime;
       let that = this;
       this.currentTimes = currentTime * 1000;
+      this.durations = playTime;
       this.percentage = parseInt(((currentTime * 1000) / playTime) * 100);
 
       if (this.isPlay) {
@@ -231,7 +232,6 @@ export default {
     playMusic: function () {
       this.$store.commit("setisPlay", true);
       this.currentProgress();
-
       let musicrotateAn = document.getElementById("diskRotate");
       musicrotateAn.setAttribute(
         "style",
@@ -246,9 +246,17 @@ export default {
     playnext: function () {
       this.nextSong(this.serialNumber, this.playlist);
       this.getlyric();
+      this.currentTimes = 0;
+      this.durations = 0;
+      this.percentage = 0;
+      this.currentProgress();
     },
     playlast: function () {
       this.lastSong(this.serialNumber, this.playlist);
+      this.currentTimes = 0;
+      this.durations = 0;
+      this.percentage = 0;
+      this.currentProgress();
     },
     getlyric: function () {
       // 根据音乐id获取歌词
@@ -302,15 +310,15 @@ export default {
     that.getlyric();
     that.noScroll(); //禁止主页面滚动
     setTimeout(function () {
-      that.currentTimes = that.appthat.$refs.audio.currentTime * 1000;
       if (that.isPlay) {
         that.playMusic();
       } else {
         that.pauseMusic();
       }
+      setTimeout(() => {
+        that.currentProgress();
+      }, 30);
     }, 500);
-
-    that.durations = that.appthat.$refs.audio.duration * 1000;
   },
   destroyed () {
     //主页面可滑动

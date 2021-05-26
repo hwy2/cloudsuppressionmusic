@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Axios from 'axios'
-// import cookie from "json-cookie";
+import cookies from 'js-cookie'
 import "./assets/less/public.less"
 import "./router/permission.js"
 
@@ -62,6 +62,30 @@ Vue.prototype.canScroll = function () {
     document.removeEventListener('touchmove', mo, false)
 }
 
+Vue.prototype.cookiesControl = function (type, name = "", value = "") {
+    let result = [];
+    switch (type) {
+        case "set":
+            cookies.set(name, value);
+            break;
+        case "get":
+            result = cookies.get(name);
+            break;
+        case "remove":
+            cookies.remove(name);
+            break;
+        default:
+            break;
+    }
+    if (name == "cookie") {
+        return result;
+    } else {
+        return JSON.parse(result);
+    }
+
+}; //cookie操作
+
+
 //获取当前登录态
 Vue.prototype.getLoginStatus = function () {
     let status = false;
@@ -87,6 +111,7 @@ Vue.prototype.getLoginStatus = function () {
 // 获取音乐是否可以播放并获取相应的播放url
 Vue.prototype.getplayMusic = function (songinfoId, songinfo) {
     // 根据id查看是否有权限播放
+    let _this = this;
     this.$axios.
     get("/check/music", {
             params: {
@@ -95,34 +120,7 @@ Vue.prototype.getplayMusic = function (songinfoId, songinfo) {
         }).then(res => {
             window.console.log("音乐是否可用", res.data);
             if (res.data.success) {
-                // 根据localStorage的歌曲id,获取详细歌曲的信息
-                this.$axios
-                    .get("/song/url", {
-                        params: {
-                            id: songinfoId
-                        }
-                    })
-                    .then(res => {
-                        // window.console.log("歌曲详情：", res);
-                        if (res.data.data[0].url != null) {
-                            this.$store.commit("setsongInfo", JSON.stringify(songinfo));
-                            this.$store.commit("setsongPlayUrl", res.data.data[0].url);
-                            this.$store.commit("setisPlay", true);
-                            window.console.log("歌曲详情：", res.data);
-                        } else {
-                            Toast({
-                                message: "亲爱的,暂无版权，已为你播放下一首",
-                                position: "top",
-                                duration: 3000
-                            });
-                            this.nextSong(this.$store.getters.getserialNumber, this.$store.getters.getplaylist);
-                        }
-
-                    })
-                    .catch(error => {
-                        this.$store.commit("setisPlay", false);
-                        window.console.log("歌曲URL获取失败！", error);
-                    });
+                _this.getMusicUrl(songinfoId, songinfo);
             } else {
                 Toast({
                     message: "亲爱的,暂无版权，已为你播放下一首",
@@ -142,29 +140,70 @@ Vue.prototype.getplayMusic = function (songinfoId, songinfo) {
             this.nextSong(this.$store.getters.getserialNumber, this.$store.getters.getplaylist);
             window.console.log("歌曲URL获取失败！", error);
         });
-
-
 }
 
-// 下一首
-Vue.prototype.nextSong = function (number, songlist) {
-    // window.console.log("aa", this.$store.getters.getserialNumber)
-    // window.console.log(number, songlist);
-    if (songlist.length > 1 && number < songlist.length - 1) {
-        this.$store.commit("setserialNumber", number + 1);
-        if (!songlist[number + 1].picUrl) {
-            songlist[number + 1]["picUrl"] = songlist[number + 1].al.picUrl;
-        }
-        this.getplayMusic(songlist[number + 1].id ? songlist[number + 1].id : songlist[number + 1].resourceId, songlist[number + 1]);
-    } else {
-        this.$store.commit("setisPlay", false);
-        Toast({
-            message: "列表已播放完",
-            position: "center",
-            duration: 3000
+Vue.prototype.getMusicUrl = function (songinfoId, songinfo) {
+    // 根据localStorage的歌曲id,获取详细歌曲的信息
+    this.$axios
+        .get("/song/url", {
+            params: {
+                id: songinfoId
+            }
+        })
+        .then(res => {
+            window.console.log("歌曲详情：", res);
+            if (res.data.data[0].url != null) {
+                this.$store.commit("setsongInfo", songinfo);
+                this.$store.commit("setsongPlayUrl", res.data.data[0].url);
+                this.$store.commit("setisPlay", true);
+                window.console.log("歌曲详情：", res.data);
+            } else {
+                Toast({
+                    message: "亲爱的,暂无版权，已为你播放下一首",
+                    position: "top",
+                    duration: 3000
+                });
+                this.nextSong(this.$store.getters.getserialNumber, this.$store.getters.getplaylist);
+            }
+
+        })
+        .catch(error => {
+            this.$store.commit("setisPlay", false);
+            window.console.log("歌曲URL获取失败！", error);
         });
-    }
 }
+
+Vue.prototype.playAudioControl = function (_this) {
+        // 播放音乐，并修改状态
+        // window.console.log(document.getElementById("audioPlayer"));
+        _this.$refs.audio.play();
+        _this.$store.commit("setisPlay", true);
+        let musicrotateAn = document.getElementById("musicImg");
+        musicrotateAn.setAttribute(
+            "style",
+            "-webkit-animation: rotateAn 8s linear infinite; animation: rotateAn 8s linear infinite;"
+        );
+    },
+
+    // 下一首
+    Vue.prototype.nextSong = function (number, songlist) {
+        // window.console.log("aa", this.$store.getters.getserialNumber)
+        // window.console.log(number, songlist);
+        if (songlist.length > 1 && number < songlist.length - 1) {
+            this.$store.commit("setserialNumber", number + 1);
+            if (!songlist[number + 1].picUrl) {
+                songlist[number + 1]["picUrl"] = songlist[number + 1].al.picUrl;
+            }
+            this.getplayMusic(songlist[number + 1].id ? songlist[number + 1].id : songlist[number + 1].resourceId, songlist[number + 1]);
+        } else {
+            this.$store.commit("setisPlay", false);
+            Toast({
+                message: "列表已播放完",
+                position: "center",
+                duration: 3000
+            });
+        }
+    }
 
 // 上一首
 Vue.prototype.lastSong = function (number, songlist) {
@@ -191,7 +230,6 @@ Vue.prototype.lastSong = function (number, songlist) {
 
     }
 }
-
 
 new Vue({
     router,

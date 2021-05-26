@@ -44,7 +44,6 @@
 import "../assets/less/login.less";
 import { Toast } from "mint-ui";
 import { Indicator } from "mint-ui";
-import cookie from "json-cookie";
 export default {
   data () {
     return {
@@ -93,12 +92,8 @@ export default {
           console.log("登录信息", res.data);
           Indicator.close();
           if (res.data.code == 200) {
-            cookie.set("profile", res.data.profile, {
-              expires: 7,
-            });
-            cookie.set("cookie", res.data.cookie, {
-              expires: 7,
-            });
+            that.cookiesControl("set", "profile", res.data.profile);
+            that.cookiesControl("set", "cookie", res.data.cookie);
             Toast({
               message: "登录成功",
               position: "top",
@@ -128,7 +123,8 @@ export default {
         });
     },
     getnewsong: function () {
-      let profile = cookie.get("profile")
+      let profile = this.cookiesControl("get", "profile");
+      window.console.log(profile);
       let that = this;
       // 获取播放记录歌曲
       that
@@ -145,10 +141,10 @@ export default {
             res.data.weekData[0].song.al.picUrl;
           that.$store.commit(
             "setsongInfo",
-            JSON.stringify(res.data.weekData[0].song)
+            res.data.weekData[0].song
           );
 
-          cookie.set("songInfo", res.data.weekData[0].song);
+          that.cookiesControl("set", "songInfo", res.data.weekData[0].song);
 
           that.getMusicUrl();
         })

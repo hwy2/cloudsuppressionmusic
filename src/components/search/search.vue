@@ -132,9 +132,6 @@
                   <div class="top">
                     <img :src="item.coverUrl"
                          :alt="item.title">
-
-                    <img :src="item.coverUrl"
-                         :alt="item.title">
                   </div>
                   <div class="center">
                     <p>
@@ -241,7 +238,8 @@ import "../../assets/less/recommendation.less";
 import "../../assets/less/search.less";
 import SongListdetails from "../songListDetails/songListDetails";
 import VideoDetails from "../videoDetails/videoDetails";
-
+import { Indicator } from "mint-ui";
+import { Toast } from "mint-ui";
 export default {
   name: "search",
   components: {
@@ -312,6 +310,7 @@ export default {
       this.$emit("searchdown");
     },
     getSearch: function (id) {
+      Indicator.open("加载中...");
       this.$axios
         .get("/search", {
           params: {
@@ -354,6 +353,13 @@ export default {
             this.singerVisible = true;
             this.albumVisible = false;
             this.subscriberVisible = false;
+            if (res.data.result.artistCount == 0) {
+              Toast({
+                message: "无数据",
+                position: "top",
+                duration: 3000
+              });
+            }
             this.singerList = res.data.result.artists;
           }
           else if (id == 10) {
@@ -363,7 +369,15 @@ export default {
             this.singerVisible = false;
             this.albumVisible = true;
             this.subscriberVisible = false;
+            if (res.data.result.albumCount == 0) {
+              Toast({
+                message: "无数据",
+                position: "top",
+                duration: 3000
+              });
+            }
             this.albumList = res.data.result.albums;
+
           }
           else if (id == 1002) {
             this.singleVisible = false;
@@ -376,8 +390,10 @@ export default {
           } else {
             return;
           }
+          Indicator.close();
         })
         .catch((error) => {
+          Indicator.close();
           window.console.log("获取失败", error);
         });
     },
@@ -578,7 +594,7 @@ export default {
 
           let songId = id;
           songinfos["picUrl"] = this.songinfo.songs[0].al.picUrl;
-          this.$store.commit("setsongInfo", JSON.stringify(songinfos));
+          this.$store.commit("setsongInfo", songinfos);
           this.getplayMusic(songId, songinfos);
         })
         .catch((error) => {

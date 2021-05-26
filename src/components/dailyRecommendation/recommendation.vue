@@ -99,7 +99,7 @@
 <script >
 import "../../assets/less/recommendation.less";
 import { Indicator } from "mint-ui";
-import cookie from "json-cookie";
+
 
 export default {
   name: "DailyRecommendation",
@@ -131,12 +131,12 @@ export default {
     getDailyMusic: function () {
       Indicator.open("加载中...");
       let that = this;
-      // 获取每日推荐歌曲          cookie: cookie.get("cookie")
+      // 获取每日推荐歌曲
       this.$axios({
         url: "/recommend/songs",
         method: 'GET',
         params: {
-          cookie: cookie.get("cookie")
+          cookie: this.cookiesControl("get", "cookie")
         },
         withCredentials: true
       })

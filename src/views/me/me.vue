@@ -185,7 +185,6 @@
 </template>
 <script>
 import "../../assets/less/me.less";
-import cookie from "json-cookie";
 import { Indicator } from "mint-ui";
 import SongListdetails from "../../components/songListDetails/songListDetails";
 export default {
@@ -271,7 +270,7 @@ export default {
       // 获取心动模式音乐
       this.$axios({
         url: "/playmode/intelligence/list",
-        params: { id: this.songId, pid: this.songListId, cookie: cookie.get("cookie") }
+        params: { id: this.songId, pid: this.songListId, cookie: this.cookiesControl("get", "cookie") }
       })
         .then(res => {
           window.console.log("心动模式音乐：", res.data);
@@ -302,7 +301,7 @@ export default {
     }
   },
   created () {
-    let profile = cookie.get("profile");
+    let profile = this.cookiesControl("get", "profile");
     window.console.log(profile);
     this.getUserDetail(profile.userId);
   },

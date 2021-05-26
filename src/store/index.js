@@ -52,7 +52,7 @@ export default new Vuex.Store({
             state.dailySongs = status;
         },
         setsongInfo(state, status) {
-            state.songInfo = JSON.parse(status);
+            state.songInfo = status;
         },
         setsongPlayUrl(state, status) {
             state.songPlayUrl = status;

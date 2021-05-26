@@ -404,7 +404,6 @@ import DailyRecommendation from "../../components/dailyRecommendation/recommenda
 import SongSheet from "../../components/songSheet/songSheet";
 import SongListdetails from "../../components/songListDetails/songListDetails";
 import RankingList from "../../components/rankingList/rankingList";
-import cookie from "json-cookie";
 import { Toast } from "mint-ui";
 export default {
   name: "find",
@@ -559,7 +558,7 @@ export default {
       //根据index打开相应的方法
       switch (type) {
         case '每日推荐':
-          if (cookie.get("cookie")) {
+          if (this.cookiesControl("get", "cookie")) {
             this.openDaily();
           } else {
             Toast({
@@ -614,7 +613,7 @@ export default {
       window.console.log(songinfos);
       let songId = songinfos.id ? songinfos.id : songinfos.resourceId;
       songinfos["picUrl"] = songinfospicUrl;
-      this.$store.commit("setsongInfo", JSON.stringify(songinfos));
+      this.$store.commit("setsongInfo", songinfos);
       this.getplayMusic(songId, songinfos);
     },
     closeRankingListDialog: function () {

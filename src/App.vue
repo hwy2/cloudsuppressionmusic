@@ -4,33 +4,34 @@
   </div>
 </template>
 <script>
-import cookie from "json-cookie";
 export default {
   methods: {
   },
   beforeCreate () {
-    if (cookie.get("songInfo")) {
-      this.$store.commit(
-        "setsongInfo",
-        JSON.stringify(cookie.get("songInfo"))
-      );
+    if (this.cookiesControl('get', "songInfo")) {
+      this.$store.commit("setsongInfo", this.cookiesControl("get", "songInfo"));
     }
-
-    //在页面加载时读取cookie里的状态信息
-    if (cookie.get("store")) {
+    //在页面加载时读取this.cookiesControl里的状态信息
+    if (this.cookiesControl("get", "store")) {
       this.$store.replaceState(
         Object.assign(
           {},
           this.$store.state,
-          cookie.get("store")
+          this.cookiesControl("get", "store")
         )
       );
+      let songInfo = this.cookiesControl('get', "songInfo");
+      this.getMusicUrl(songInfo.id, songInfo)
+      setTimeout(() => {
+        this.$store.commit("setisPlay", false);
+      }, 180);
     }
   },
   created () {
-    //在页面刷新时将vuex里的信息保存到cookie里
+    this.$store.commit("setisPlay", false);
+    //在页面刷新时将vuex里的信息保存到this.cookiesControl里
     window.addEventListener("beforeunload", () => {
-      cookie.set("store", this.$store.state);
+      this.cookiesControl("set", "store", this.$store.state);
     });
   }
 }

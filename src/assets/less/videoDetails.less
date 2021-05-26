@@ -3,9 +3,14 @@
         .dialog-container {
             .topBanner {
                 width: 750px;
-                background-color: black !important;
+                background-color: transparent !important;
                 height: 60px !important;
                 min-height: 0;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 99999;
 
                 .topnarBar {
                     padding: 0.03rem .2rem 0;
@@ -26,13 +31,11 @@
                         }
                     }
                 }
-
-
             }
 
             .videoMain {
                 width: 100%;
-                height: 94vh;
+                height: 96vh;
 
                 .videoPlay {
                     width: 100%;
@@ -41,6 +44,7 @@
                     video {
                         width: 100%;
                         height: 32vh;
+                        display: flex;
                         background: #000;
                     }
                 }
@@ -94,7 +98,7 @@
 
                     .substance {
                         overflow: auto;
-                        height: 59.4vh;
+                        height: 57.4vh;
                         touch-action: pan-y;
 
                         .briefIntroduction {
@@ -217,6 +221,7 @@
                                         .left {
                                             flex: 1;
                                             padding: 12px 0;
+                                            position: relative;
 
                                             img {
                                                 width: 56px;
@@ -224,6 +229,15 @@
                                                 display: block;
                                                 margin: 0 auto;
                                                 border-radius: 56px;
+                                            }
+
+                                            img:nth-of-type(2) {
+                                                width: 56px*1.2;
+                                                height: 56px*1.2;
+                                                position: absolute;
+                                                top: 50%;
+                                                left: 50%;
+                                                transform: translate(-50%, -50%);
                                             }
                                         }
 

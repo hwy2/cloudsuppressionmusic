@@ -69,7 +69,6 @@
 import "../../../assets/less/videoRecommend.less";
 import { Indicator } from "mint-ui";
 import VideoDetails from "../../../components/videoDetails/videoDetails";
-import cookie from "json-cookie";
 export default {
   name: "recommend",
   components: {
@@ -137,7 +136,7 @@ export default {
       this.$axios({
         url: "/video/category/list",
         params: {
-          cookie: cookie.get("cookie")
+          cookie: this.cookiesControl("get", "cookie")
         }
       })
         .then((res) => {
@@ -161,7 +160,7 @@ export default {
         url: "/video/group",
         params: {
           id: this.videoGroupId,
-          cookie: cookie.get("cookie")
+          cookie: this.cookiesControl("get", "cookie")
         }
       })
         .then((res) => {
@@ -181,7 +180,7 @@ export default {
         params: {
           offset: this.page,
           id: this.videoGroupId,
-          cookie: cookie.get("cookie")
+          cookie: this.cookiesControl("get", "cookie")
         },
       })
         .then((res) => {
