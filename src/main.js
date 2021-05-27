@@ -77,10 +77,10 @@ Vue.prototype.cookiesControl = function (type, name = "", value = "") {
         default:
             break;
     }
-    if (name == "cookie") {
-        return result;
-    } else {
+    if (type == "get" && name != "cookie") {
         return JSON.parse(result);
+    } else {
+        return result;
     }
 
 }; //cookie操作
